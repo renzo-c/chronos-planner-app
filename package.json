@@ -4,8 +4,19 @@
   "description": "this is the chronos planner app front end",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --exec babel-node src/index.js"
   },
   "author": "Renzo Navarro",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "graphql-tag": "^2.10.1",
+    "react-apollo": "^2.5.8"
+  }
 }
