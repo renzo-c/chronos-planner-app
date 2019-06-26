@@ -15,8 +15,6 @@
     "nodemon": "^1.19.1"
   },
   "dependencies": {
-    "dotenv": "^8.0.0",
-    "graphql-tag": "^2.10.1",
-    "react-apollo": "^2.5.8"
+    "dotenv": "^8.0.0"
   }
 }
