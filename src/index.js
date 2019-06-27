@@ -30,3 +30,10 @@ client
     `
   })
   .then(result => console.log(result.data.employees));
+
+
+  function f_sum(a, b) {
+    return a + c;
+  };
+
+  console.log(f_sum(2, 5));
