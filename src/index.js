@@ -8,9 +8,25 @@ const link = new HttpLink({
     uri: "https://chronos-planner-server.herokuapp.com/"
 });
 
-
-
 const client = new ApolloClient({
     cache,
     link
 });
+
+import gql from 'graphql-tag';
+
+client
+.query({
+    query: gql`
+      query employees {
+        employees {
+            id
+            firstName
+            user
+            createdAt
+            deletedAt
+        }
+      }
+    `
+  })
+  .then(result => console.log(result.data.employees));
