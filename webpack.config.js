@@ -1,3 +1,5 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   entry: "./src/index.js",
   
@@ -13,6 +15,14 @@ module.exports = {
   resolve: {
     extensions: ['*', '.js']
   },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+        title: 'Chronos Planner',
+        header: 'Welcome to Chronos Planner :)',        
+        template: './src/indexTemplate.html'
+    })
+  ],
 
   output: {
     path: __dirname + "/public",
