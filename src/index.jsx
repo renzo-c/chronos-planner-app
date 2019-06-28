@@ -33,14 +33,9 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App.js';
+import App from './App';
 
-const title = 'React with Webpack and Babel';
+ReactDOM.render(<App />, document.getElementById('app'));
 
-
-ReactDOM.render(
-  <App title={title} />,
-  document.getElementById("app")
-);
-
-module.hot.accept();
+// Use only in dev environment or change dependency hot loader and add webpack conf in prod
+// module.hot.accept();
