@@ -6,19 +6,19 @@ module.exports = {
   
   devtool: 'source-map',
   
-  entry: "./src/index.js",
+  entry: "./src/index.jsx",
   
   module: {
     rules: [
       {
-        test: /\.(js)$/,
+        test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader']
       }
     ]
   },
   resolve: {
-    extensions: ['*', '.js']
+    extensions: ['*', '.js', '.jsx']
   },
 
   plugins: [
