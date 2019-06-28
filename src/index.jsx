@@ -35,6 +35,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
+
 ReactDOM.render(<App />, document.getElementById('app'));
 
 // Use only in dev environment or change dependency hot loader and add webpack conf in prod

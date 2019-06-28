@@ -4,5 +4,9 @@
     "env": {
         "browser": true,
         "node": true
+    },
+    "rules": {
+        // "no-unused-vars": 0,
+        // "prefer-const": 0
     }
   }
