@@ -40,3 +40,6 @@
   // [1,2,3,4].map(n => console.log(n));
   // console.log(f_sum(2, 5));
 
+  import sum from './sum.js';
+
+  console.log(sum(2, 5));
