@@ -31,15 +31,16 @@
 //   })
 //   .then(result => console.log(result.data.employees));
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App.js';
 
-  // function f_sum(a, b) {
-  //   return a + c;
-  // };
+const title = 'React with Webpack and Babel';
 
-  // console.log("__dirname");
-  // [1,2,3,4].map(n => console.log(n));
-  // console.log(f_sum(2, 5));
 
-  import sum from './sum.js';
+ReactDOM.render(
+  <App title={title} />,
+  document.getElementById("app")
+);
 
-  console.log(sum(2, 5));
+module.hot.accept();
