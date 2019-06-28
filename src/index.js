@@ -33,17 +33,13 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App from './App.js';
 
 const title = 'React with Webpack and Babel';
 
 
 ReactDOM.render(
-  (
-  <div>
-  <div>{title}</div>
-  <h1>This should not refresh</h1>
-  </div>
-  ),
+  <App title={title} />,
   document.getElementById("app")
 );
 
