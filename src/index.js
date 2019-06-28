@@ -31,16 +31,12 @@
 //   })
 //   .then(result => console.log(result.data.employees));
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App.js';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App.js";
 
-const title = 'React with Webpack and Babel';
+const title = "React with Webpack and Babel";
 
-
-ReactDOM.render(
-  <App title={title} />,
-  document.getElementById("app")
-);
+ReactDOM.render(<App title={title} />, document.getElementById("app"));
 
 module.hot.accept();
