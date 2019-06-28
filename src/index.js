@@ -1,39 +1,45 @@
-import 'cross-fetch/polyfill';
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
+// import 'cross-fetch/polyfill';
+// import { ApolloClient } from 'apollo-client';
+// import { InMemoryCache } from 'apollo-cache-inmemory';
+// import { HttpLink } from 'apollo-link-http';
 
-const cache = new InMemoryCache();
-const link = new HttpLink({
-    uri: "https://chronos-planner-server.herokuapp.com/"
-});
+// const cache = new InMemoryCache();
+// const link = new HttpLink({
+//     uri: "https://chronos-planner-server.herokuapp.com/"
+// });
 
-const client = new ApolloClient({
-    cache,
-    link
-});
+// const client = new ApolloClient({
+//     cache,
+//     link
+// });
 
-import gql from 'graphql-tag';
+// import gql from 'graphql-tag';
 
-client
-.query({
-    query: gql`
-      query employees {
-        employees {
-            id
-            firstName
-            user
-            createdAt
-            deletedAt
-        }
-      }
-    `
-  })
-  .then(result => console.log(result.data.employees));
+// client
+// .query({
+//     query: gql`
+//       query employees {
+//         employees {
+//             id
+//             firstName
+//             user
+//             createdAt
+//             deletedAt
+//         }
+//       }
+//     `
+//   })
+//   .then(result => console.log(result.data.employees));
 
 
-  function f_sum(a, b) {
-    return a + c;
-  };
+  // function f_sum(a, b) {
+  //   return a + c;
+  // };
 
-  console.log(f_sum(2, 5));
+  // console.log("__dirname");
+  // [1,2,3,4].map(n => console.log(n));
+  // console.log(f_sum(2, 5));
+
+  import sum from './sum.js';
+
+  console.log(sum(2, 5));
