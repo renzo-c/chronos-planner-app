@@ -7,6 +7,7 @@ import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from 'react-apollo';
 import './styles/index.css';
 import App from './components/App/App';
+import Firebase, { FirebaseContext } from './components/Firebase';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
@@ -19,10 +20,12 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
-  document.getElementById('app'),
+  <Firebase.Provider value={new Firebase()}>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </Firebase.Provider>,
+  document.getElementById('app')
 );
 
 // Use only in dev environment or change dependency hot loader and add webpack conf in prod
