@@ -1,5 +1,14 @@
 import React from 'react';
 
-const Landing = () => <div>This is the Landing page</div>;
+const Landing = () => (
+  <div>
+    <div>This is the Landing page. </div>
+    <br />
+    <div>
+      Hello, I&apos;m still building this project, please for now go directly
+      to Home page. Thank you! :)
+    </div>
+  </div>
+);
 
 export default Landing;
