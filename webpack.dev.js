@@ -6,6 +6,10 @@ module.exports = {
   mode: 'development',
 
   devtool: 'eval-source-map',
+
+  node: {
+    fs: 'empty'
+  },
   
   entry: "./src/index.jsx",
   

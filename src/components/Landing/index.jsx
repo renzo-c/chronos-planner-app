@@ -5,8 +5,8 @@ const Landing = () => (
     <div>This is the Landing page. </div>
     <br />
     <div>
-      Hello, I&apos;m still building this project, please for now go directly
-      to Home page. Thank you! :)
+      Hello, I&apos;m still building this project, please for now go directly to
+      Home page. Thank you! :)
     </div>
   </div>
 );
