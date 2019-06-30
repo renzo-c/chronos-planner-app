@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withFirebase } from '../Firebase';
+import { Link, withRouter } from 'react-router-dom';
+import * as ROUTES from '../../constants/routes';
 
 const INITIAL_STATE = {
   username: '',
@@ -19,7 +21,6 @@ class SignUpForm extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE };
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onSubmit = (event) => {
@@ -30,6 +31,7 @@ class SignUpForm extends Component {
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then((authUser) => {
         this.setState({ ...INITIAL_STATE });
+        this.props.history.push(ROUTES.HOME)
       })
       .catch((error) => {
         this.setState({ error });
@@ -86,4 +88,4 @@ class SignUpForm extends Component {
   }
 }
 
-export default withFirebase(SignUpForm);
+export default withRouter(withFirebase(SignUpForm));
