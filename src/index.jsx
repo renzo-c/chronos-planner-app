@@ -20,12 +20,12 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <Firebase.Provider value={new Firebase()}>
+  <FirebaseContext.Provider value={new Firebase()}>
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>
-  </Firebase.Provider>,
-  document.getElementById('app')
+  </FirebaseContext.Provider>,
+  document.getElementById('app'),
 );
 
 // Use only in dev environment or change dependency hot loader and add webpack conf in prod
