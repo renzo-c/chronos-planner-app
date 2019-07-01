@@ -1,5 +1,14 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import SignInForm from './signInForm';
+import { SignUpLink } from '../SignUp';
 
-const SignIn = () => <div>This is the SignIn page</div>;
+const SignInPage = () => (
+  <div>
+    <h1>SignIn</h1>
+    <SignInForm />
+    <SignUpLink />
+  </div>
+);
 
-export default SignIn;
+export default SignInPage;
