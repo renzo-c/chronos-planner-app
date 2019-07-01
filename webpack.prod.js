@@ -29,7 +29,6 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
         title: 'Chronos Planner',
-        header: 'Welcome to Chronos Planner :)',        
         template: './src/indexTemplate.html'
     })
   ],
