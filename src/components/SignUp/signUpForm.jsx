@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withFirebase } from '../Firebase';
 import { Link, withRouter } from 'react-router-dom';
+import Firebase, { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
 const INITIAL_STATE = {
@@ -14,8 +14,10 @@ const INITIAL_STATE = {
 
 class SignUpForm extends Component {
   static propTypes = {
-    firebase: PropTypes.func.isRequired,
-    doCreateUserWithEmailAndPassword: PropTypes.func.isRequired,
+    firebase: PropTypes.instanceOf(Firebase).isRequired,
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
   }
 
   constructor(props) {
@@ -26,12 +28,12 @@ class SignUpForm extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     const { username, email, passwordOne } = this.state;
-    const { firebase } = this.props;
+    const { firebase, history } = this.props;
     firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then((authUser) => {
         this.setState({ ...INITIAL_STATE });
-        this.props.history.push(ROUTES.HOME)
+        history.push(ROUTES.HOME);
       })
       .catch((error) => {
         this.setState({ error });
