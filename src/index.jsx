@@ -6,7 +6,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from 'react-apollo';
 import './styles/index.css';
-import App from './App';
+import App from './components/App/App';
+import Firebase, { FirebaseContext } from './components/Firebase';
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
@@ -19,9 +20,11 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <ApolloProvider client={client}>
-    <App />
-  </ApolloProvider>,
+  <FirebaseContext.Provider value={new Firebase()}>
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
+  </FirebaseContext.Provider>,
   document.getElementById('app'),
 );
 

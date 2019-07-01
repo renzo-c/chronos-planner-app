@@ -1,16 +1,34 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
 
   devtool: 'eval-source-map',
+
+  node: {
+    fs: 'empty'
+  },
   
   entry: "./src/index.jsx",
   
   module: {
     rules: [
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true,
+              disable: true,
+            },
+          },
+        ],
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -27,11 +45,11 @@ module.exports = {
   },
 
   plugins: [
+    new Dotenv(),
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
         title: 'Chronos Planner',
-        header: 'Welcome to Chronos Planner :)',        
         template: './src/indexTemplate.html'
     })
   ],

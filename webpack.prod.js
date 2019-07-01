@@ -6,6 +6,10 @@ module.exports = {
   
   devtool: 'source-map',
   
+  node: {
+    fs: 'empty'
+  },
+
   entry: "./src/index.jsx",
   
   module: {
@@ -25,7 +29,6 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
         title: 'Chronos Planner',
-        header: 'Welcome to Chronos Planner :)',        
         template: './src/indexTemplate.html'
     })
   ],
