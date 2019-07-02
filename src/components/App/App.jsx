@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Navigation from '../Navigation';
 import LandingPage from '../Landing';
 import SignUpPage from '../SignUp';
 import SignInPage from '../SignIn';
@@ -8,6 +7,7 @@ import PasswordForgetPage from '../PasswordForget';
 import HomePage from '../Home';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
+import Employee from '../Employee';
 import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
 import NavBarMenu from '../../assets/Components/NavBarMenu'
@@ -36,7 +36,6 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Navigation authUser={this.state.authUser} />
           <NavBarMenu authUser={this.state.authUser}/>
           <hr />
 
@@ -47,6 +46,7 @@ class App extends Component {
           <Route path={ROUTES.HOME} component={HomePage} />
           <Route path={ROUTES.ACCOUNT} component={AccountPage} />
           <Route path={ROUTES.ADMIN} component={AdminPage} />
+          <Route path={ROUTES.EMPLOYEE} component={Employee} />
         </div>
       </Router>
     );

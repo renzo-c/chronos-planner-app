@@ -46,6 +46,9 @@ const NavBarMenuAuth = () => (
       <Link className="tabs" to={ROUTES.ACCOUNT}>
         <Button color="inherit">ACCOUNT</Button>
       </Link>
+      <Link className="tabs" to={ROUTES.EMPLOYEE}>
+        <Button color="inherit">EMPLOYEE</Button>
+      </Link>
       <div className="spaceBetween" />
       <SignOutButton className="tabs"/>
     </Toolbar>
