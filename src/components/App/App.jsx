@@ -10,6 +10,7 @@ import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
+import NavBarMenu from '../../assets/Components/NavBarMenu'
 
 class App extends Component {
   constructor(props) {
@@ -32,12 +33,11 @@ class App extends Component {
   }
 
   render() {
-    console.log("this.props", this.props);
     return (
       <Router>
         <div>
           <Navigation authUser={this.state.authUser} />
-
+          <NavBarMenu authUser={this.state.authUser}/>
           <hr />
 
           <Route exact path={ROUTES.LANDING} component={LandingPage} />
