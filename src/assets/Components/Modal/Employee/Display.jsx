@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function DraggableDialog() {
+const Display = ({employee}) => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
@@ -59,7 +59,7 @@ export default function DraggableDialog() {
             disabled
             id="outlined-disabled"
             label="First Name"
-            value="hi"
+            value={employee.firstName}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -68,7 +68,7 @@ export default function DraggableDialog() {
             disabled
             id="outlined-disabled"
             label="Last Name"
-            value="hi"
+            value={employee.lastName}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -77,7 +77,7 @@ export default function DraggableDialog() {
             disabled
             id="outlined-disabled"
             label="User"
-            value="hi"
+            value={employee.user}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -86,7 +86,7 @@ export default function DraggableDialog() {
             disabled
             id="outlined-disabled"
             label="DNI"
-            value="hi"
+            value={employee.dni}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -95,7 +95,7 @@ export default function DraggableDialog() {
             disabled
             id="outlined-disabled"
             label="Address"
-            value="hi"
+            value={employee.address}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -104,7 +104,7 @@ export default function DraggableDialog() {
             disabled
             id="outlined-disabled"
             label="Phone"
-            value="hi"
+            value={employee.phone}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -113,7 +113,7 @@ export default function DraggableDialog() {
             disabled
             id="outlined-disabled"
             label="Email"
-            value="hi"
+            value={employee.email}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -137,3 +137,5 @@ export default function DraggableDialog() {
     </div>
   );
 }
+
+export default Display;

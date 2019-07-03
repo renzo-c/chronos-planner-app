@@ -12,8 +12,8 @@ class Employee extends Component {
         <Query query={EMPLOYEES}>
           {({ loading, error, data }) => {
             const { employees } = data;
-            if (loading || !employees) return <Loading />;
             if (error) return `Error ${error.message}`;
+            if (loading || !employees) return <Loading />;
             return <Table employees={employees} />;
           }}
         </Query>
