@@ -17,6 +17,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import Display from '../../assets/Components/Modal/Employee/Display';
+import Update from '../../assets/Components/Modal/Employee/Update';
+import Create from '../../assets/Components/Modal/Employee/Create';
+import './style.css';
 
 const createData = (firstName, lastName, user, phone, email) => {
   return { firstName, lastName, user, phone, email };
@@ -70,6 +74,7 @@ const headRows = [
   { id: 'user', numeric: false, disablePadding: false, label: 'User' },
   { id: 'phone', numeric: false, disablePadding: false, label: 'Phone' },
   { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
+  { id: 'actions', numeric: false, disablePadding: false, label: 'Actions' },
 ];
 
 function EnhancedTableHead(props) {
@@ -171,7 +176,7 @@ const EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            EMPLOYEES
+            EMPLOYEES <Create />
           </Typography>
         )}
       </div>
@@ -225,7 +230,6 @@ export default function EnhancedTable({ employees }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const rows = getRows(employees);
 
-  console.log('selected.first', selected);
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
     setOrder(isDesc ? 'asc' : 'desc');
@@ -270,9 +274,8 @@ export default function EnhancedTable({ employees }) {
   }
 
   const isSelected = name => {
-      console.log("selected", selected);
-      console.log("name", name);
-      return selected.indexOf(name) !== -1};
+    return selected.indexOf(name) !== -1;
+  };
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -282,10 +285,7 @@ export default function EnhancedTable({ employees }) {
       <Paper className={classes.paper}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-          >
+          <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
               numSelected={selected.length}
               order={order}
@@ -299,13 +299,11 @@ export default function EnhancedTable({ employees }) {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.user);
-                  console.log("isItemSelected", isItemSelected);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.user)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -314,6 +312,7 @@ export default function EnhancedTable({ employees }) {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
+                          onClick={event => handleClick(event, row.user)}
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
@@ -331,6 +330,12 @@ export default function EnhancedTable({ employees }) {
                       <TableCell align="center">{row.user}</TableCell>
                       <TableCell align="center">{row.phone}</TableCell>
                       <TableCell align="center">{row.email}</TableCell>
+                      <TableCell align="center">
+                        <div className="groupInLine">
+                          <Display />
+                          <Update />
+                        </div>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
