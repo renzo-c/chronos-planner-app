@@ -15,8 +15,6 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
@@ -224,7 +222,6 @@ export default function EnhancedTable({ employees }) {
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const rows = getRows(employees);
 
@@ -272,10 +269,6 @@ export default function EnhancedTable({ employees }) {
     setRowsPerPage(+event.target.value);
   }
 
-  function handleChangeDense(event) {
-    setDense(event.target.checked);
-  }
-
   const isSelected = name => {
       console.log("selected", selected);
       console.log("name", name);
@@ -292,7 +285,6 @@ export default function EnhancedTable({ employees }) {
           <Table
             className={classes.table}
             aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
           >
             <EnhancedTableHead
               numSelected={selected.length}
@@ -366,10 +358,6 @@ export default function EnhancedTable({ employees }) {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-      <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      />
     </div>
   );
 }
