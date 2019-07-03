@@ -62,7 +62,12 @@ function getSorting(order, orderBy) {
 }
 
 const headRows = [
-  { id: 'firstName', numeric: false, disablePadding: true, label: 'First Name' },
+  {
+    id: 'firstName',
+    numeric: false,
+    disablePadding: true,
+    label: 'First Name',
+  },
   { id: 'lastName', numeric: false, disablePadding: false, label: 'Last Name' },
   { id: 'user', numeric: false, disablePadding: false, label: 'User' },
   { id: 'phone', numeric: false, disablePadding: false, label: 'Phone' },
@@ -93,22 +98,24 @@ function EnhancedTableHead(props) {
             inputProps={{ 'aria-label': 'Select all desserts' }}
           />
         </TableCell>
-        {headRows.map(row => (
-          <TableCell
-            key={row.id}
-            align='center'
-            padding={row.disablePadding ? 'none' : 'default'}
-            sortDirection={orderBy === row.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === row.id}
-              direction={order}
-              onClick={createSortHandler(row.id)}
+        {headRows.map(row => {
+          return (
+            <TableCell
+              key={row.id}
+              align="center"
+              padding={row.disablePadding ? 'none' : 'default'}
+              sortDirection={orderBy === row.id ? order : false}
             >
-              {row.label}
-            </TableSortLabel>
-          </TableCell>
-        ))}
+              <TableSortLabel
+                active={orderBy === row.id}
+                direction={order}
+                onClick={createSortHandler(row.id)}
+              >
+                {row.label}
+              </TableSortLabel>
+            </TableCell>
+          );
+        })}
       </TableRow>
     </TableHead>
   );
@@ -166,7 +173,7 @@ const EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            Nutrition
+            EMPLOYEES
           </Typography>
         )}
       </div>
@@ -221,7 +228,7 @@ export default function EnhancedTable({ employees }) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const rows = getRows(employees);
 
-  console.log('rows', rows);
+  console.log('selected.first', selected);
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
     setOrder(isDesc ? 'asc' : 'desc');
@@ -230,7 +237,7 @@ export default function EnhancedTable({ employees }) {
 
   function handleSelectAllClick(event) {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.name);
+      const newSelecteds = rows.map(n => n.user);
       setSelected(newSelecteds);
       return;
     }
@@ -269,7 +276,10 @@ export default function EnhancedTable({ employees }) {
     setDense(event.target.checked);
   }
 
-  const isSelected = name => selected.indexOf(name) !== -1;
+  const isSelected = name => {
+      console.log("selected", selected);
+      console.log("name", name);
+      return selected.indexOf(name) !== -1};
 
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
@@ -296,13 +306,14 @@ export default function EnhancedTable({ employees }) {
               {stableSort(rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.user);
+                  console.log("isItemSelected", isItemSelected);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={event => handleClick(event, row.firstName)}
+                      onClick={event => handleClick(event, row.user)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -316,6 +327,7 @@ export default function EnhancedTable({ employees }) {
                         />
                       </TableCell>
                       <TableCell
+                        align="center"
                         component="th"
                         id={labelId}
                         scope="row"
@@ -323,10 +335,10 @@ export default function EnhancedTable({ employees }) {
                       >
                         {row.firstName}
                       </TableCell>
-                      <TableCell align="right">{row.lastName}</TableCell>
-                      <TableCell align="right">{row.user}</TableCell>
-                      <TableCell align="right">{row.phone}</TableCell>
-                      <TableCell align="right">{row.email}</TableCell>
+                      <TableCell align="center">{row.lastName}</TableCell>
+                      <TableCell align="center">{row.user}</TableCell>
+                      <TableCell align="center">{row.phone}</TableCell>
+                      <TableCell align="center">{row.email}</TableCell>
                     </TableRow>
                   );
                 })}
