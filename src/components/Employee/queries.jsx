@@ -12,6 +12,7 @@ const employees = gql`
       address
       phone
       email
+      status
     }
   }
 `;

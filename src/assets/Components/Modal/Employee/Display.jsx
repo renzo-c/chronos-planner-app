@@ -27,6 +27,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Display = ({employee}) => {
+  console.log("employee", employee);
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
@@ -122,7 +123,7 @@ const Display = ({employee}) => {
             disabled
             id="outlined-disabled"
             label="Status"
-            value="hi"
+            value={employee.status}
             className={classes.textField}
             margin="normal"
             variant="outlined"

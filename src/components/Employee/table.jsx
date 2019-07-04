@@ -22,8 +22,28 @@ import Update from '../../assets/Components/Modal/Employee/Update';
 import Create from '../../assets/Components/Modal/Employee/Create';
 import './style.css';
 
-const createData = (firstName, lastName, user, password, dni, address, phone, email, ) => {
-  return { firstName, lastName, user, password, dni, address, phone, email };
+const createData = (
+  firstName,
+  lastName,
+  user,
+  password,
+  dni,
+  address,
+  phone,
+  email,
+  status
+) => {
+  return {
+    firstName,
+    lastName,
+    user,
+    password,
+    dni,
+    address,
+    phone,
+    email,
+    status,
+  };
 };
 
 const getRows = queryResult =>
@@ -36,7 +56,8 @@ const getRows = queryResult =>
       row.dni,
       row.address,
       row.phone,
-      row.email
+      row.email,
+      row.status
     );
   });
 
@@ -335,7 +356,7 @@ export default function EnhancedTable({ employees }) {
                       <TableCell align="center">{row.email}</TableCell>
                       <TableCell align="center">
                         <div className="groupInLine">
-                          <Display employee={row}/>
+                          <Display employee={row} />
                           <Update />
                         </div>
                       </TableCell>
