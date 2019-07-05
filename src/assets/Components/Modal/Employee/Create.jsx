@@ -207,7 +207,14 @@ const Create = () => {
           >
             {(createEmployee, { data, loading, error }) => {
               if (error) {
-                return <ErrorMessage error={error} />;
+                return (
+                  <div>
+                    <ErrorMessage error={error} />
+                    <Button onClick={createEmployee} color="primary">
+                      Save
+                    </Button>
+                  </div>
+                );
               }
               if (loading) return <Loading />;
               return (
