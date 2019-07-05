@@ -4,15 +4,30 @@ import 'cross-fetch/polyfill';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
+import { onError } from 'apollo-link-error';
+import { ApolloLink } from 'apollo-link';
 import { ApolloProvider } from 'react-apollo';
 import './styles/index.css';
 import App from './components/App/App';
 import Firebase, { FirebaseContext } from './components/Firebase';
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors) {
+    console.log('graphQLErrors', graphQLErrors);
+  }
+  if (networkError) {
+    console.log('networkError', networkError);
+  }
+});
+
 const cache = new InMemoryCache();
-const link = new HttpLink({
+
+const httpLink = new HttpLink({
+  // uri: 'http://localhost:4005/',
   uri: 'https://chronos-planner-server.herokuapp.com/',
 });
+
+const link = ApolloLink.from([errorLink, httpLink]);
 
 const client = new ApolloClient({
   cache,
@@ -25,7 +40,7 @@ ReactDOM.render(
       <App />
     </ApolloProvider>
   </FirebaseContext.Provider>,
-  document.getElementById('app'),
+  document.getElementById('app')
 );
 
 // Use only in dev environment or change dependency hot loader and add webpack conf in prod

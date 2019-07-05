@@ -46,8 +46,8 @@ export default function DraggableDialog() {
 
   return (
     <div>
-      <Tooltip title="Detalles">
-        <IconButton aria-label="Detalles" onClick={handleOpen}>
+      <Tooltip title="Update info">
+        <IconButton aria-label="Update info" onClick={handleOpen}>
           <i className={'material-icons'}>edit</i>
         </IconButton>
       </Tooltip>

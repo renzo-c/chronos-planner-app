@@ -41,8 +41,8 @@ const Display = ({employee}) => {
 
   return (
     <div>
-      <Tooltip title="Detalles">
-        <IconButton aria-label="Detalles" onClick={handleOpen}>
+      <Tooltip title="Show info">
+        <IconButton aria-label="Show info" onClick={handleOpen}>
           <i className={'material-icons'}>account_circle</i>
         </IconButton>
       </Tooltip>

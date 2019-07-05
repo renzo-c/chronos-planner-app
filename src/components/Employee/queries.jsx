@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const employees = gql`
+export const EMPLOYEES = gql`
   query employees {
     employees {
       id
@@ -16,5 +16,3 @@ const employees = gql`
     }
   }
 `;
-
-export default employees;

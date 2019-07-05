@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import EMPLOYEES from './queries';
+import { EMPLOYEES } from './queries';
 import Table from './table';
 import { Query } from 'react-apollo';
 import Loading from '../../assets/Components/Loading';
