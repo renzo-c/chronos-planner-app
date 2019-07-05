@@ -6,7 +6,7 @@ mutation createEmployee(
     $lastName: String!
     $user: String!
     $password: String!
-    $dni: Int!
+    $dni: String!
     $address: String!
     $phone: String!
     $email: String!

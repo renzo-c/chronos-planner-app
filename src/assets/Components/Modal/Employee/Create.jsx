@@ -32,7 +32,6 @@ const Create = () => {
   const [values, setValues] = React.useState(
     getEmployeeCleanObject(employeeInitValues)
   );
-  const [loadSnippet, setLoadSnippet] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -46,10 +45,6 @@ const Create = () => {
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
-
-  const { firstName, lastName, user, password, address, phone, email } = values;
-  const dni = parseInt(values.dni);
-
   return (
     <>
       <Tooltip title="New Employee">
@@ -108,6 +103,7 @@ const Create = () => {
           />
           <TextField
             id="outlined-full-width"
+            type="password"
             label="Password"
             placeholder="Password account"
             value={values.password}
@@ -192,19 +188,7 @@ const Create = () => {
           <Button onClick={handleClose} color="primary">
             Close
           </Button>
-          <Mutation
-            mutation={CREATE_EMPLOYEE}
-            variables={{
-              firstName,
-              lastName,
-              user,
-              password,
-              dni,
-              address,
-              phone,
-              email,
-            }}
-          >
+          <Mutation mutation={CREATE_EMPLOYEE} variables={values}>
             {(createEmployee, { data, loading, error }) => {
               if (error) {
                 return (
