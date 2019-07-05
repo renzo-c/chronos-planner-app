@@ -16,6 +16,12 @@ import { employeeInitValues } from '../../../../constants/models';
 import { Mutation } from 'react-apollo';
 import { CREATE_EMPLOYEE } from '../../../../components/Employee/mutations';
 
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
 const getEmployeeCleanObject = obj =>
   JSON.parse(JSON.stringify(employeeInitValues));
 
@@ -32,6 +38,7 @@ const Create = () => {
   const [values, setValues] = React.useState(
     getEmployeeCleanObject(employeeInitValues)
   );
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -45,6 +52,21 @@ const Create = () => {
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const passwordAdornment = (
+    <InputAdornment position={'end'}>
+      <IconButton
+        aria-label="Toggle password visibility"
+        onClick={handleClickShowPassword}
+      >
+        {showPassword ? <Visibility /> : <VisibilityOff />}
+      </IconButton>
+    </InputAdornment>
+  );
   return (
     <>
       <Tooltip title="New Employee">
@@ -103,7 +125,7 @@ const Create = () => {
           />
           <TextField
             id="outlined-full-width"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             label="Password"
             placeholder="Password account"
             value={values.password}
@@ -113,6 +135,9 @@ const Create = () => {
             variant="outlined"
             InputLabelProps={{
               shrink: true,
+            }}
+            InputProps={{
+              endAdornment: passwordAdornment,
             }}
           />
           <TextField
