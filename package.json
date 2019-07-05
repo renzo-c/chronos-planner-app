@@ -42,6 +42,8 @@
     "@material-ui/icons": "^4.2.1",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
+    "apollo-link": "^1.2.12",
+    "apollo-link-error": "^1.1.11",
     "apollo-link-http": "^1.5.15",
     "cross-fetch": "^3.0.4",
     "dotenv": "^8.0.0",

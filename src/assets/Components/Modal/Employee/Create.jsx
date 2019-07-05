@@ -9,9 +9,14 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
+import ErrorMessage from '../../ErrorMessage';
+import { employeeInitValues } from '../../../../constants/models';
+import { Mutation } from 'react-apollo';
+import { CREATE_EMPLOYEE } from '../../../../components/Employee/mutations';
 
+const getEmployeeCleanObject = obj =>
+  JSON.parse(JSON.stringify(employeeInitValues));
 
 function PaperComponent(props) {
   return (
@@ -21,22 +26,18 @@ function PaperComponent(props) {
   );
 }
 
-const useStyles = makeStyles(theme => ({
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-}));
-
-export default function DraggableDialog() {
+const Create = () => {
   const [open, setOpen] = React.useState(false);
-  const classes = useStyles();
+  const [values, setValues] = React.useState(
+    getEmployeeCleanObject(employeeInitValues)
+  );
 
   const handleOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setValues(getEmployeeCleanObject(employeeInitValues));
     setOpen(false);
   };
 
@@ -44,10 +45,12 @@ export default function DraggableDialog() {
     setValues({ ...values, [name]: event.target.value });
   };
 
+  const { firstName, lastName, user, password, address, phone, email } = values;
+  const dni = parseInt(values.dni);
   return (
     <>
-      <Tooltip title="Detalles">
-        <IconButton aria-label="Detalles" onClick={handleOpen}>
+      <Tooltip title="New Employee">
+        <IconButton aria-label="New Employee" onClick={handleOpen}>
           <i className={'material-icons'}>add</i>
         </IconButton>
       </Tooltip>
@@ -64,7 +67,9 @@ export default function DraggableDialog() {
           <TextField
             id="outlined-full-width"
             label="First Name"
-            placeholder="Placeholder"
+            placeholder="Name(s)"
+            value={values.firstName}
+            onChange={handleChange('firstName')}
             fullWidth
             margin="normal"
             variant="outlined"
@@ -75,7 +80,9 @@ export default function DraggableDialog() {
           <TextField
             id="outlined-full-width"
             label="Last Name"
-            placeholder="Placeholder"
+            placeholder="Last name(s)"
+            value={values.lastName}
+            onChange={handleChange('lastName')}
             fullWidth
             margin="normal"
             variant="outlined"
@@ -86,7 +93,9 @@ export default function DraggableDialog() {
           <TextField
             id="outlined-full-width"
             label="User"
-            placeholder="Placeholder"
+            placeholder="User account"
+            value={values.user}
+            onChange={handleChange('user')}
             fullWidth
             margin="normal"
             variant="outlined"
@@ -97,7 +106,9 @@ export default function DraggableDialog() {
           <TextField
             id="outlined-full-width"
             label="Password"
-            placeholder="Placeholder"
+            placeholder="Password account"
+            value={values.password}
+            onChange={handleChange('password')}
             fullWidth
             margin="normal"
             variant="outlined"
@@ -108,7 +119,9 @@ export default function DraggableDialog() {
           <TextField
             id="outlined-full-width"
             label="DNI"
-            placeholder="Placeholder"
+            placeholder="Identity Document"
+            value={values.dni}
+            onChange={handleChange('dni')}
             fullWidth
             margin="normal"
             variant="outlined"
@@ -119,7 +132,9 @@ export default function DraggableDialog() {
           <TextField
             id="outlined-full-width"
             label="Address"
-            placeholder="Placeholder"
+            placeholder="Address"
+            value={values.address}
+            onChange={handleChange('address')}
             fullWidth
             margin="normal"
             variant="outlined"
@@ -130,7 +145,9 @@ export default function DraggableDialog() {
           <TextField
             id="outlined-full-width"
             label="Phone"
-            placeholder="Placeholder"
+            placeholder="Phone (fixed or mobile)"
+            value={values.phone}
+            onChange={handleChange('phone')}
             fullWidth
             margin="normal"
             variant="outlined"
@@ -141,7 +158,9 @@ export default function DraggableDialog() {
           <TextField
             id="outlined-full-width"
             label="Email"
-            placeholder="Placeholder"
+            placeholder="Email account"
+            value={values.email}
+            onChange={handleChange('email')}
             fullWidth
             margin="normal"
             variant="outlined"
@@ -154,19 +173,14 @@ export default function DraggableDialog() {
             select
             label="Status"
             fullWidth
-            value="Active"
-            onChange={handleChange('currency')}
-            // SelectProps={{
-            //   MenuProps: {
-            //     className: classes.menu,
-            //   },
-            // }}
+            value={values.status}
+            onChange={handleChange('status')}
             margin="normal"
             variant="outlined"
           >
-            {['Active', 'Inactive'].map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
+            {['enabled', 'disabled'].map(option => (
+              <MenuItem key={option} value={option}>
+                {option}
               </MenuItem>
             ))}
           </TextField>
@@ -175,8 +189,44 @@ export default function DraggableDialog() {
           <Button onClick={handleClose} color="primary">
             Close
           </Button>
+          <Mutation
+            mutation={CREATE_EMPLOYEE}
+            variables={{
+              firstName,
+              lastName,
+              user,
+              password,
+              dni,
+              address,
+              phone,
+              email,
+            }}
+          >
+            {(createEmployee, { data, loading, error }) => {
+              if (error) {
+                return <ErrorMessage error={error} />;
+              }
+              console.log(
+                firstName,
+                lastName,
+                user,
+                password,
+                dni,
+                address,
+                phone,
+                email
+              );
+              return (
+                <Button onClick={createEmployee} color="primary">
+                  Save
+                </Button>
+              );
+            }}
+          </Mutation>
         </DialogActions>
       </Dialog>
     </>
   );
-}
+};
+
+export default Create;
