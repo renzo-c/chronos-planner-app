@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import Loading from '../../Loading';
 import ErrorMessage from '../../ErrorMessage';
 import { employeeInitValues } from '../../../../constants/models';
 import { Mutation } from 'react-apollo';
@@ -31,6 +32,7 @@ const Create = () => {
   const [values, setValues] = React.useState(
     getEmployeeCleanObject(employeeInitValues)
   );
+  const [loadSnippet, setLoadSnippet] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -47,6 +49,7 @@ const Create = () => {
 
   const { firstName, lastName, user, password, address, phone, email } = values;
   const dni = parseInt(values.dni);
+
   return (
     <>
       <Tooltip title="New Employee">
@@ -206,16 +209,7 @@ const Create = () => {
               if (error) {
                 return <ErrorMessage error={error} />;
               }
-              console.log(
-                firstName,
-                lastName,
-                user,
-                password,
-                dni,
-                address,
-                phone,
-                email
-              );
+              if (loading) return <Loading />;
               return (
                 <Button onClick={createEmployee} color="primary">
                   Save

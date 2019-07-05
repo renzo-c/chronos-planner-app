@@ -36,9 +36,6 @@ const ErrorModal = ({ error }) => {
       <DialogContent>
         <DialogContentText>
           {error.toString()}
-          <br/><br/>
-          If you were responsible and renewed your support contract, 
-          please contact your IT partner
         </DialogContentText>
       </DialogContent>
       <DialogActions>

@@ -1,11 +1,17 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles({
   root: {
-    marginTop: '15em',
     flexGrow: 1,
+    backgroundColor: 'green',
+  },
+  centering: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
   },
 });
 
@@ -13,9 +19,9 @@ const Loading = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <LinearProgress variant="query" />
-      <br />
-      <LinearProgress color="secondary" variant="query" />
+      <div className={classes.centering}>
+      <CircularProgress />
+      </div>
     </div>
   );
 };
