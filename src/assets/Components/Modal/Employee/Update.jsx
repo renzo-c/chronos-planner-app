@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function DraggableDialog() {
+const UpdateModal = () => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
@@ -62,7 +62,7 @@ export default function DraggableDialog() {
         </DialogTitle>
         <DialogContent>
           <TextField
-            id="outlined-full-width"
+            id="firstName"
             label="First Name"
             placeholder="Placeholder"
             fullWidth
@@ -73,7 +73,7 @@ export default function DraggableDialog() {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="lastName"
             label="Last Name"
             placeholder="Placeholder"
             fullWidth
@@ -84,7 +84,7 @@ export default function DraggableDialog() {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="user"
             label="User"
             placeholder="Placeholder"
             fullWidth
@@ -95,7 +95,7 @@ export default function DraggableDialog() {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="password"
             label="Password"
             placeholder="Placeholder"
             fullWidth
@@ -106,7 +106,7 @@ export default function DraggableDialog() {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="dni"
             label="DNI"
             placeholder="Placeholder"
             fullWidth
@@ -117,7 +117,7 @@ export default function DraggableDialog() {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="address"
             label="Address"
             placeholder="Placeholder"
             fullWidth
@@ -128,7 +128,7 @@ export default function DraggableDialog() {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="phone"
             label="Phone"
             placeholder="Placeholder"
             fullWidth
@@ -139,7 +139,7 @@ export default function DraggableDialog() {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="email"
             label="Email"
             placeholder="Placeholder"
             fullWidth
@@ -150,7 +150,7 @@ export default function DraggableDialog() {
             }}
           />
           <TextField
-            id="outlined-select-currency"
+            id="status"
             select
             label="Status"
             fullWidth
@@ -159,8 +159,8 @@ export default function DraggableDialog() {
             margin="normal"
             variant="outlined"
           >
-            {['Active', 'Inactive'].map(option => (
-              <MenuItem key={option.value} value={option.value}>
+            {['Active', 'Inactive'].map((option, index) => (
+              <MenuItem key={index} value={option.value}>
                 {option.label}
               </MenuItem>
             ))}
@@ -175,3 +175,5 @@ export default function DraggableDialog() {
     </div>
   );
 }
+
+export default UpdateModal;

@@ -331,7 +331,7 @@ export default function EnhancedTable({ employees }) {
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.firstName}
+                      key={index}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">

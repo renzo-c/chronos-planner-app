@@ -10,20 +10,26 @@ import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Loading from '../../Loading';
 import ErrorMessage from '../../ErrorMessage';
 import { employeeInitValues } from '../../../../constants/models';
-import { Mutation } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import { CREATE_EMPLOYEE } from '../../../../components/Employee/mutations';
-
-import Input from '@material-ui/core/Input';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { EMPLOYEES } from '../../../../components/Employee/queries';
 
 const getEmployeeCleanObject = obj =>
   JSON.parse(JSON.stringify(employeeInitValues));
+
+const update = (cache, { data: { createEmployee } }) => {
+  const { employees } = cache.readQuery({ query: EMPLOYEES });
+  cache.writeQuery({
+    query: EMPLOYEES,
+    data: { employees: employees.concat([createEmployee]) },
+  });
+};
 
 function PaperComponent(props) {
   return (
@@ -53,6 +59,9 @@ const Create = () => {
     setValues({ ...values, [name]: event.target.value });
   };
 
+  const handleSave = (createEmployee, variables) => {
+    createEmployee(variables).then(() => handleClose());
+  };
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -67,6 +76,7 @@ const Create = () => {
       </IconButton>
     </InputAdornment>
   );
+
   return (
     <>
       <Tooltip title="New Employee">
@@ -85,7 +95,7 @@ const Create = () => {
         </DialogTitle>
         <DialogContent>
           <TextField
-            id="outlined-full-width"
+            id="firstName"
             label="First Name"
             placeholder="Name(s)"
             value={values.firstName}
@@ -98,7 +108,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="lastName"
             label="Last Name"
             placeholder="Last name(s)"
             value={values.lastName}
@@ -111,7 +121,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="user"
             label="User"
             placeholder="User account"
             value={values.user}
@@ -124,7 +134,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="password"
             type={showPassword ? 'text' : 'password'}
             label="Password"
             placeholder="Password account"
@@ -141,7 +151,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="dni"
             label="DNI"
             placeholder="Identity Document"
             value={values.dni}
@@ -154,7 +164,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="address"
             label="Address"
             placeholder="Address"
             value={values.address}
@@ -167,7 +177,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="phone"
             label="Phone"
             placeholder="Phone (fixed or mobile)"
             value={values.phone}
@@ -180,7 +190,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="email"
             label="Email"
             placeholder="Email account"
             value={values.email}
@@ -193,7 +203,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-select-currency"
+            id="status"
             select
             label="Status"
             fullWidth
@@ -213,23 +223,27 @@ const Create = () => {
           <Button onClick={handleClose} color="primary">
             Close
           </Button>
-          <Mutation mutation={CREATE_EMPLOYEE} variables={values}>
+          <Mutation
+            mutation={CREATE_EMPLOYEE}
+            variables={values}
+            update={update}
+          >
             {(createEmployee, { data, loading, error }) => {
-              if (error) {
-                return (
-                  <div>
-                    <ErrorMessage error={error} />
-                    <Button onClick={createEmployee} color="primary">
-                      Save
-                    </Button>
-                  </div>
-                );
+              if (loading) {
+                return <Loading />;
               }
-              if (loading) return <Loading />;
               return (
-                <Button onClick={createEmployee} color="primary">
-                  Save
-                </Button>
+                <>
+                  <Button
+                    onClick={() =>
+                      handleSave(createEmployee, { variables: data })
+                    }
+                    color="primary"
+                  >
+                    Save
+                  </Button>
+                  {error && <ErrorMessage error={error} />}
+                </>
               );
             }}
           </Mutation>

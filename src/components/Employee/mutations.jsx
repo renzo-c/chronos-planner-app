@@ -22,6 +22,7 @@ mutation createEmployee(
     email: $email
     status: $status
     ) {
+        id
         firstName
         lastName
         user
