@@ -18,7 +18,7 @@ function PaperComponent(props) {
   );
 }
 
-export default function DraggableDialog() {
+const BasicModal = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => {
@@ -63,3 +63,5 @@ export default function DraggableDialog() {
     </div>
   );
 }
+
+export default BasicModal;

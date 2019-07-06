@@ -10,14 +10,26 @@ import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Loading from '../../Loading';
 import ErrorMessage from '../../ErrorMessage';
 import { employeeInitValues } from '../../../../constants/models';
-import { Mutation } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import { CREATE_EMPLOYEE } from '../../../../components/Employee/mutations';
+import { EMPLOYEES } from '../../../../components/Employee/queries';
 
 const getEmployeeCleanObject = obj =>
   JSON.parse(JSON.stringify(employeeInitValues));
+
+const update = (cache, { data: { createEmployee } }) => {
+  const { employees } = cache.readQuery({ query: EMPLOYEES });
+  cache.writeQuery({
+    query: EMPLOYEES,
+    data: { employees: employees.concat([createEmployee]) },
+  });
+};
 
 function PaperComponent(props) {
   return (
@@ -32,7 +44,7 @@ const Create = () => {
   const [values, setValues] = React.useState(
     getEmployeeCleanObject(employeeInitValues)
   );
-  const [loadSnippet, setLoadSnippet] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   const handleOpen = () => {
     setOpen(true);
@@ -47,8 +59,23 @@ const Create = () => {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  const { firstName, lastName, user, password, address, phone, email } = values;
-  const dni = parseInt(values.dni);
+  const handleSave = (createEmployee, variables) => {
+    createEmployee(variables).then(() => handleClose());
+  };
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const passwordAdornment = (
+    <InputAdornment position={'end'}>
+      <IconButton
+        aria-label="Toggle password visibility"
+        onClick={handleClickShowPassword}
+      >
+        {showPassword ? <Visibility /> : <VisibilityOff />}
+      </IconButton>
+    </InputAdornment>
+  );
 
   return (
     <>
@@ -68,7 +95,7 @@ const Create = () => {
         </DialogTitle>
         <DialogContent>
           <TextField
-            id="outlined-full-width"
+            id="firstName"
             label="First Name"
             placeholder="Name(s)"
             value={values.firstName}
@@ -81,7 +108,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="lastName"
             label="Last Name"
             placeholder="Last name(s)"
             value={values.lastName}
@@ -94,7 +121,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="user"
             label="User"
             placeholder="User account"
             value={values.user}
@@ -107,7 +134,8 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="password"
+            type={showPassword ? 'text' : 'password'}
             label="Password"
             placeholder="Password account"
             value={values.password}
@@ -118,9 +146,12 @@ const Create = () => {
             InputLabelProps={{
               shrink: true,
             }}
+            InputProps={{
+              endAdornment: passwordAdornment,
+            }}
           />
           <TextField
-            id="outlined-full-width"
+            id="dni"
             label="DNI"
             placeholder="Identity Document"
             value={values.dni}
@@ -133,7 +164,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="address"
             label="Address"
             placeholder="Address"
             value={values.address}
@@ -146,7 +177,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="phone"
             label="Phone"
             placeholder="Phone (fixed or mobile)"
             value={values.phone}
@@ -159,7 +190,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-full-width"
+            id="email"
             label="Email"
             placeholder="Email account"
             value={values.email}
@@ -172,7 +203,7 @@ const Create = () => {
             }}
           />
           <TextField
-            id="outlined-select-currency"
+            id="status"
             select
             label="Status"
             fullWidth
@@ -194,33 +225,25 @@ const Create = () => {
           </Button>
           <Mutation
             mutation={CREATE_EMPLOYEE}
-            variables={{
-              firstName,
-              lastName,
-              user,
-              password,
-              dni,
-              address,
-              phone,
-              email,
-            }}
+            variables={values}
+            update={update}
           >
             {(createEmployee, { data, loading, error }) => {
-              if (error) {
-                return (
-                  <div>
-                    <ErrorMessage error={error} />
-                    <Button onClick={createEmployee} color="primary">
-                      Save
-                    </Button>
-                  </div>
-                );
+              if (loading) {
+                return <Loading />;
               }
-              if (loading) return <Loading />;
               return (
-                <Button onClick={createEmployee} color="primary">
-                  Save
-                </Button>
+                <>
+                  <Button
+                    onClick={() =>
+                      handleSave(createEmployee, { variables: data })
+                    }
+                    color="primary"
+                  >
+                    Save
+                  </Button>
+                  {error && <ErrorMessage error={error} />}
+                </>
               );
             }}
           </Mutation>

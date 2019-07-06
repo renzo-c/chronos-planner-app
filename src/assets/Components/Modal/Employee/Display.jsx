@@ -27,7 +27,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Display = ({employee}) => {
-  console.log("employee", employee);
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
