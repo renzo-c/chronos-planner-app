@@ -357,7 +357,7 @@ export default function EnhancedTable({ employees }) {
                       <TableCell align="center">
                         <div className="groupInLine">
                           <Display employee={row} />
-                          <Update />
+                          <Update employee={row} />
                         </div>
                       </TableCell>
                     </TableRow>

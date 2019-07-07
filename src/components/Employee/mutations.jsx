@@ -40,7 +40,7 @@ export const UPDATE_EMPLOYEE = gql`
 mutation updateEmployee(
     $firstName: String
     $lastName: String
-    $user: String
+    $user: String!
     $password: String
     $dni: String
     $address: String
