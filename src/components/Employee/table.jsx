@@ -20,6 +20,10 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Display from '../../assets/Components/Modal/Employee/Display';
 import Update from '../../assets/Components/Modal/Employee/Update';
 import Create from '../../assets/Components/Modal/Employee/Create';
+import { Mutation } from 'react-apollo';
+import { EMPLOYEES } from './queries';
+import { DELETE_EMPLOYEE } from './mutations';
+import Loading from '../../assets/Components/Loading';
 import './style.css';
 
 const createData = (
@@ -183,10 +187,30 @@ const useToolbarStyles = makeStyles(theme => ({
   },
 }));
 
+
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { numSelected, selected, resetSelected } = props;
 
+  const handleDelete = (deleteEmployee, selected) => {
+    selected.map(user => {
+      deleteEmployee({ variables: { user } });
+    })
+    resetSelected();
+  };
+  
+  const update = (cache, { data: { deleteEmployee } }) => {
+    const { employees } = cache.readQuery({ query: EMPLOYEES });
+    cache.writeQuery({
+      query: EMPLOYEES,
+      data: {
+        employees: employees.filter(
+          employee => employee.user !== deleteEmployee.user
+        ),
+      },
+    });
+  };
+  
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -208,9 +232,23 @@ const EnhancedTableToolbar = props => {
       <div className={classes.actions}>
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            <IconButton aria-label="Delete">
-              <DeleteIcon />
-            </IconButton>
+            <Mutation mutation={DELETE_EMPLOYEE} update={update}>
+              {(deleteEmployee, { data, loading, error }) => {
+                if (loading) {
+                  return <Loading />;
+                }
+                return (
+                  <>
+                    <IconButton
+                      aria-label="Delete"
+                      onClick={() => handleDelete(deleteEmployee, selected)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </>
+                );
+              }}
+            </Mutation>
           </Tooltip>
         ) : (
           <Tooltip title="Filter list">
@@ -304,10 +342,16 @@ export default function EnhancedTable({ employees }) {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
+  const resetSelected = () => setSelected([]);
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          selected={selected}
+          resetSelected={resetSelected}
+        />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -17,7 +17,6 @@ import Loading from '../../Loading';
 import ErrorMessage from '../../ErrorMessage';
 import { Mutation } from 'react-apollo';
 import { UPDATE_EMPLOYEE } from '../../../../components/Employee/mutations';
-import { EMPLOYEES } from '../../../../components/Employee/queries';
 
 const getEmployeeCleanObject = obj => JSON.parse(JSON.stringify(obj));
 
@@ -70,7 +69,6 @@ const Update = ({ employee }) => {
       </IconButton>
     </InputAdornment>
   );
-  console.log('values', values);
   return (
     <>
       <Tooltip title="Update Employee Information">

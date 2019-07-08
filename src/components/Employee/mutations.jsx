@@ -71,3 +71,22 @@ mutation updateEmployee(
     }
 }
 `;
+
+export const DELETE_EMPLOYEE = gql`
+mutation deleteEmployee(
+    $user: String!
+) {deleteEmployee(
+    user: $user
+    ) {
+        firstName
+        lastName
+        user
+        password
+        dni
+        address
+        phone
+        email
+        status
+    }
+}
+`;
