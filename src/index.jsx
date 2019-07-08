@@ -23,8 +23,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const cache = new InMemoryCache();
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4005/',
-  // uri: 'https://chronos-planner-server.herokuapp.com/',
+  // uri: 'http://localhost:4005/',
+  uri: 'https://chronos-planner-server.herokuapp.com/',
 });
 
 const link = ApolloLink.from([errorLink, httpLink]);
