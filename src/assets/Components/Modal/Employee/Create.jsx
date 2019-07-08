@@ -16,7 +16,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Loading from '../../Loading';
 import ErrorMessage from '../../ErrorMessage';
 import { employeeInitValues } from '../../../../constants/models';
-import { Mutation, Query } from 'react-apollo';
+import { Mutation } from 'react-apollo';
 import { CREATE_EMPLOYEE } from '../../../../components/Employee/mutations';
 import { EMPLOYEES } from '../../../../components/Employee/queries';
 
