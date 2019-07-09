@@ -9,18 +9,25 @@ import ErrorMessage from '../../assets/Components/ErrorMessage';
 import '../../styles/constantStyle.css';
 
 const Schedule = () => {
-  const { data: employees, loading: emplLoading, error: emplError } = useQuery(
-    EMPLOYEES
-  );
-  const { data: schedules, loading: scheLoading, error: scheError } = useQuery(
-    SCHEDULES
-  );
-  if (scheLoading || !schedules || emplLoading || !employees)
-    return <Loading />;
-  if (emplError) return <ErrorMessage error={emplError} />;
-  if (scheError) return <ErrorMessage error={scheError} />;
+  const {
+    data: employees,
+    loading: employeeLoading,
+    error: employeeError,
+  } = useQuery(EMPLOYEES);
+  const {
+    data: schedules,
+    loading: scheduleLoading,
+    error: scheduleError,
+  } = useQuery(SCHEDULES);
 
-  return <Table schedules={schedules.schedules} employees={employees}/>;
+  if (scheduleLoading || !schedules || employeeLoading || !employees)
+    return <Loading />;
+  if (employeeError) return <ErrorMessage error={employeeError} />;
+  if (scheduleError) return <ErrorMessage error={scheduleError} />;
+
+  return (
+    <Table schedules={schedules.schedules} employees={employees.employees} />
+  );
 };
 
 export default Schedule;

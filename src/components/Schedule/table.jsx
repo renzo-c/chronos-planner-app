@@ -283,6 +283,7 @@ export default function EnhancedTable({ schedules, employees }) {
     setOrderBy(property);
   }
   console.log("employees", employees);
+  console.log("schedules", schedules);
   function handleSelectAllClick(event) {
     if (event.target.checked) {
       const newSelecteds = rows.map(n => n.id);
