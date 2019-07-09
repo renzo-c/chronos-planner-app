@@ -17,9 +17,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import Display from '../../assets/Components/Modal/Employee/Display';
+import Display from '../../assets/Components/Modal/Schedule/Display';
 import Update from '../../assets/Components/Modal/Employee/Update';
-import Create from '../../assets/Components/Modal/Employee/Create';
+import Create from '../../assets/Components/Modal/Schedule/Create';
 import { Mutation } from 'react-apollo';
 import { EMPLOYEES } from './queries';
 import { DELETE_EMPLOYEE } from './mutations';
@@ -38,7 +38,6 @@ const createData = (tagName, start, end, { user }, status) => {
 
 const getRows = queryResult =>
   queryResult.map(row => {
-    console.log('row', row);
     return createData(
       row.tagName,
       row.start,
@@ -270,7 +269,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function EnhancedTable({ schedules }) {
+export default function EnhancedTable({ schedules, employees }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
@@ -278,13 +277,12 @@ export default function EnhancedTable({ schedules }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const rows = getRows(schedules);
-  console.log('rows', rows);
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
     setOrder(isDesc ? 'asc' : 'desc');
     setOrderBy(property);
   }
-
+  console.log("employees", employees);
   function handleSelectAllClick(event) {
     if (event.target.checked) {
       const newSelecteds = rows.map(n => n.id);
@@ -387,8 +385,8 @@ export default function EnhancedTable({ schedules }) {
                       <TableCell align="center">{row.status}</TableCell>
                       <TableCell align="center">
                         <div className="groupInLine">
-                          {/* <Display employee={row} />
-                          <Update employee={row} /> */}
+                          <Display schedule={row} />
+                          {/* <Update employee={row} /> */}
                         </div>
                       </TableCell>
                     </TableRow>

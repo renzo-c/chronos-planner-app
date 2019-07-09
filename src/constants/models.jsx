@@ -8,4 +8,12 @@ export const employeeInitValues = {
     phone: "",
     email: "",
     status: "disabled"
+};
+
+export const scheduleInitValues = {
+    tagName: "",
+    start: "",
+    end: "",
+    user: "Select an employee",
+    status: "disabled"
 }
