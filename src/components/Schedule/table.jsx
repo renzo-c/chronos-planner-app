@@ -26,41 +26,24 @@ import { DELETE_EMPLOYEE } from './mutations';
 import Loading from '../../assets/Components/Loading';
 // import './style.css';
 
-const createData = (
-  firstName,
-  lastName,
-  user,
-  password,
-  dni,
-  address,
-  phone,
-  email,
-  status
-) => {
+const createData = (tagName, start, end, { user }, status) => {
   return {
-    firstName,
-    lastName,
+    tagName,
+    start,
+    end,
     user,
-    password,
-    dni,
-    address,
-    phone,
-    email,
     status,
   };
 };
 
 const getRows = queryResult =>
   queryResult.map(row => {
+    console.log('row', row);
     return createData(
-      row.firstName,
-      row.lastName,
-      row.user,
-      row.password,
-      row.dni,
-      row.address,
-      row.phone,
-      row.email,
+      row.tagName,
+      row.start,
+      row.end,
+      row.employee,
       row.status
     );
   });
@@ -93,15 +76,20 @@ function getSorting(order, orderBy) {
 
 const headRows = [
   {
-    id: 'firstName',
+    id: 'tagName',
     numeric: false,
     disablePadding: true,
-    label: 'First Name',
+    label: 'Name',
   },
-  { id: 'lastName', numeric: false, disablePadding: false, label: 'Last Name' },
-  { id: 'user', numeric: false, disablePadding: false, label: 'User' },
-  { id: 'phone', numeric: false, disablePadding: false, label: 'Phone' },
-  { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
+  { id: 'start', numeric: false, disablePadding: false, label: 'Start' },
+  { id: 'end', numeric: false, disablePadding: false, label: 'End' },
+  {
+    id: 'user',
+    numeric: false,
+    disablePadding: false,
+    label: 'Responsible',
+  },
+  { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
   { id: 'actions', numeric: false, disablePadding: false, label: 'Actions' },
 ];
 
@@ -187,30 +175,29 @@ const useToolbarStyles = makeStyles(theme => ({
   },
 }));
 
-
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
   const { numSelected, selected, resetSelected } = props;
 
-  const handleDelete = (deleteEmployee, selected) => {
-    selected.map(user => {
-      deleteEmployee({ variables: { user } });
-    })
-    resetSelected();
-  };
-  
-  const update = (cache, { data: { deleteEmployee } }) => {
-    const { employees } = cache.readQuery({ query: EMPLOYEES });
-    cache.writeQuery({
-      query: EMPLOYEES,
-      data: {
-        employees: employees.filter(
-          employee => employee.user !== deleteEmployee.user
-        ),
-      },
-    });
-  };
-  
+  // const handleDelete = (deleteEmployee, selected) => {
+  //   selected.map(user => {
+  //     deleteEmployee({ variables: { user } });
+  //   });
+  //   resetSelected();
+  // };
+
+  // const update = (cache, { data: { deleteEmployee } }) => {
+  //   const { employees } = cache.readQuery({ query: EMPLOYEES });
+  //   cache.writeQuery({
+  //     query: EMPLOYEES,
+  //     data: {
+  //       employees: employees.filter(
+  //         employee => employee.user !== deleteEmployee.user
+  //       ),
+  //     },
+  //   });
+  // };
+
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -224,7 +211,7 @@ const EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            EMPLOYEES <Create />
+            Schedules <Create />
           </Typography>
         )}
       </div>
@@ -232,23 +219,23 @@ const EnhancedTableToolbar = props => {
       <div className={classes.actions}>
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            <Mutation mutation={DELETE_EMPLOYEE} update={update}>
+            {/* <Mutation mutation={DELETE_EMPLOYEE} update={update}>
               {(deleteEmployee, { data, loading, error }) => {
                 if (loading) {
                   return <Loading />;
                 }
                 return (
-                  <>
-                    <IconButton
-                      aria-label="Delete"
-                      onClick={() => handleDelete(deleteEmployee, selected)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </>
+                  <> */}
+            <IconButton
+              aria-label="Delete"
+              // onClick={() => handleDelete(deleteEmployee, selected)}
+            >
+              <DeleteIcon />
+            </IconButton>
+            {/* </>
                 );
               }}
-            </Mutation>
+            </Mutation> */}
           </Tooltip>
         ) : (
           <Tooltip title="Filter list">
@@ -283,15 +270,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function EnhancedTable({ employees }) {
+export default function EnhancedTable({ schedules }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const rows = getRows(employees);
-
+  const rows = getRows(schedules);
+  console.log('rows', rows);
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
     setOrder(isDesc ? 'asc' : 'desc');
@@ -300,7 +287,7 @@ export default function EnhancedTable({ employees }) {
 
   function handleSelectAllClick(event) {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.user);
+      const newSelecteds = rows.map(n => n.id);
       setSelected(newSelecteds);
       return;
     }
@@ -366,7 +353,7 @@ export default function EnhancedTable({ employees }) {
               {stableSort(rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.user);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
@@ -380,7 +367,7 @@ export default function EnhancedTable({ employees }) {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
-                          onClick={event => handleClick(event, row.user)}
+                          onClick={event => handleClick(event, row.id)}
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
@@ -392,16 +379,16 @@ export default function EnhancedTable({ employees }) {
                         scope="row"
                         padding="none"
                       >
-                        {row.firstName}
+                        {row.tagName}
                       </TableCell>
-                      <TableCell align="center">{row.lastName}</TableCell>
+                      <TableCell align="center">{row.start}</TableCell>
+                      <TableCell align="center">{row.end}</TableCell>
                       <TableCell align="center">{row.user}</TableCell>
-                      <TableCell align="center">{row.phone}</TableCell>
-                      <TableCell align="center">{row.email}</TableCell>
+                      <TableCell align="center">{row.status}</TableCell>
                       <TableCell align="center">
                         <div className="groupInLine">
-                          <Display employee={row} />
-                          <Update employee={row} />
+                          {/* <Display employee={row} />
+                          <Update employee={row} /> */}
                         </div>
                       </TableCell>
                     </TableRow>

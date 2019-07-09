@@ -12,7 +12,6 @@ class Schedule extends Component {
       <>
         <Query query={SCHEDULES}>
           {({ loading, error, data }) => {
-            console.log('data', data);
             const { schedules } = data;
             if (error) return <ErrorMessage error={error} />;
             if (loading || !schedules) return <Loading />;
