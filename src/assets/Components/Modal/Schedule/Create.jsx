@@ -14,19 +14,19 @@ import Loading from '../../Loading';
 import ErrorMessage from '../../ErrorMessage';
 import { scheduleInitValues } from '../../../../constants/models';
 import { Mutation } from 'react-apollo';
-import { CREATE_EMPLOYEE } from '../../../../components/Employee/mutations';
-import { EMPLOYEES } from '../../../../components/Employee/queries';
+import { CREATE_SCHEDULE } from '../../../../components/Schedule/mutations';
+import { SCHEDULES } from '../../../../components/Schedule/queries';
 
 const getScheduleCleanObject = obj =>
-  JSON.parse(JSON.stringify(scheduleInitValues));
+  JSON.parse(JSON.stringify(obj));
 
-// const update = (cache, { data: { createEmployee } }) => {
-//   const { employees } = cache.readQuery({ query: EMPLOYEES });
-//   cache.writeQuery({
-//     query: EMPLOYEES,
-//     data: { employees: employees.concat([createEmployee]) },
-//   });
-// };
+const update = (cache, { data: { createSchedule } }) => {
+  const { schedules } = cache.readQuery({ query: SCHEDULES });
+  cache.writeQuery({
+    query: SCHEDULES,
+    data: { schedules: schedules.concat([createSchedule]) },
+  });
+};
 
 function PaperComponent(props) {
   return (
@@ -36,7 +36,7 @@ function PaperComponent(props) {
   );
 }
 
-const Create = () => {
+const Create = ({ employees }) => {
   const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState(
     getScheduleCleanObject(scheduleInitValues)
@@ -55,10 +55,9 @@ const Create = () => {
     setValues({ ...values, [name]: event.target.value });
   };
 
-  const handleSave = (createEmployee, variables) => {
-    createEmployee(variables).then(() => handleClose());
+  const handleSave = (createSchedule, variables) => {
+    createSchedule(variables).then(() => handleClose());
   };
-
   return (
     <>
       <Tooltip title="New Schedule">
@@ -116,18 +115,21 @@ const Create = () => {
             }}
           />
           <TextField
-            id="'user'"
+            id="user"
+            select
             label="Responsible"
-            placeholder="Identity Document"
-            value={values.user}
-            onChange={handleChange('user')}
             fullWidth
+            value={values.employeeUser}
+            onChange={handleChange('employeeUser')}
             margin="normal"
             variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
-          />
+          >
+            {employees.map((option, index) => (
+              <MenuItem key={index} value={option.user}>
+                {option.firstName} {option.lastName}
+              </MenuItem>
+            ))}
+          </TextField>
           <TextField
             id="status"
             select
@@ -149,30 +151,30 @@ const Create = () => {
           <Button onClick={handleClose} color="primary">
             Close
           </Button>
-          {/* <Mutation
-            mutation={CREATE_EMPLOYEE}
+          <Mutation
+            mutation={CREATE_SCHEDULE}
             variables={values}
             update={update}
           >
-            {(createEmployee, { data, loading, error }) => {
+            {(createSchedule, { data, loading, error }) => {
               if (loading) {
                 return <Loading />;
               }
               return (
-                <> */}
+                <>
                   <Button
                     onClick={() =>
-                      handleSave(createEmployee, { variables: data })
+                      handleSave(createSchedule, { variables: data })
                     }
                     color="primary"
                   >
                     Save
                   </Button>
-                  {/* {error && <ErrorMessage error={error} />} */}
-                {/* </>
+                  {error && <ErrorMessage error={error} />}
+                </>
               );
             }}
-          </Mutation> */}
+          </Mutation>
         </DialogActions>
       </Dialog>
     </>

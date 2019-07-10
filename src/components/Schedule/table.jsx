@@ -26,8 +26,9 @@ import { DELETE_EMPLOYEE } from './mutations';
 import Loading from '../../assets/Components/Loading';
 // import './style.css';
 
-const createData = (tagName, start, end, { user }, status) => {
+const createData = (id, tagName, start, end, { user }, status) => {
   return {
+    id,
     tagName,
     start,
     end,
@@ -39,6 +40,7 @@ const createData = (tagName, start, end, { user }, status) => {
 const getRows = queryResult =>
   queryResult.map(row => {
     return createData(
+      row.id,
       row.tagName,
       row.start,
       row.end,
@@ -176,7 +178,7 @@ const useToolbarStyles = makeStyles(theme => ({
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const { numSelected, selected, resetSelected } = props;
+  const { numSelected, selected, resetSelected, employees } = props;
 
   // const handleDelete = (deleteEmployee, selected) => {
   //   selected.map(user => {
@@ -210,7 +212,7 @@ const EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            Schedules <Create />
+            Schedules <Create employees={employees}/>
           </Typography>
         )}
       </div>
@@ -277,13 +279,13 @@ export default function EnhancedTable({ schedules, employees }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const rows = getRows(schedules);
+console.log("selected", selected);
+
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
     setOrder(isDesc ? 'asc' : 'desc');
     setOrderBy(property);
   }
-  console.log("employees", employees);
-  console.log("schedules", schedules);
   function handleSelectAllClick(event) {
     if (event.target.checked) {
       const newSelecteds = rows.map(n => n.id);
@@ -329,7 +331,6 @@ export default function EnhancedTable({ schedules, employees }) {
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   const resetSelected = () => setSelected([]);
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -337,6 +338,7 @@ export default function EnhancedTable({ schedules, employees }) {
           numSelected={selected.length}
           selected={selected}
           resetSelected={resetSelected}
+          employees={employees}
         />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
