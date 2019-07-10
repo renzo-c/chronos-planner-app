@@ -67,3 +67,28 @@ mutation updateSchedule(
     }
 }
 `;
+
+export const DELETE_SCHEDULE = gql`
+mutation deleteSchedule(
+    $id: ID!
+) {deleteSchedule(
+    id: $id
+    ) {
+        id
+        tagName
+        start
+        end
+        employee {
+            firstName
+            lastName
+            user
+            dni
+            phone
+            address
+            email
+            status
+        }
+        status
+    }
+}
+`;

@@ -21,8 +21,8 @@ import Display from '../../assets/Components/Modal/Schedule/Display';
 import Update from '../../assets/Components/Modal/Schedule/Update';
 import Create from '../../assets/Components/Modal/Schedule/Create';
 import { Mutation } from 'react-apollo';
-import { EMPLOYEES } from './queries';
-import { DELETE_EMPLOYEE } from './mutations';
+import { SCHEDULES } from './queries';
+import { DELETE_SCHEDULE } from './mutations';
 import Loading from '../../assets/Components/Loading';
 // import './style.css';
 
@@ -180,24 +180,24 @@ const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
   const { numSelected, selected, resetSelected, employees } = props;
 
-  // const handleDelete = (deleteEmployee, selected) => {
-  //   selected.map(user => {
-  //     deleteEmployee({ variables: { user } });
-  //   });
-  //   resetSelected();
-  // };
+  const handleDelete = (deleteSchedule, selected) => {
+    selected.map(schedule => {
+      deleteSchedule({ variables: { id: schedule } });
+    });
+    resetSelected();
+  };
 
-  // const update = (cache, { data: { deleteEmployee } }) => {
-  //   const { employees } = cache.readQuery({ query: EMPLOYEES });
-  //   cache.writeQuery({
-  //     query: EMPLOYEES,
-  //     data: {
-  //       employees: employees.filter(
-  //         employee => employee.user !== deleteEmployee.user
-  //       ),
-  //     },
-  //   });
-  // };
+  const update = (cache, { data: { deleteSchedule } }) => {
+    const { schedules } = cache.readQuery({ query: SCHEDULES });
+    cache.writeQuery({
+      query: SCHEDULES,
+      data: {
+        schedules: schedules.filter(
+          schedule => schedule.id !== deleteSchedule.id
+        ),
+      },
+    });
+  };
 
   return (
     <Toolbar
@@ -212,7 +212,7 @@ const EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            Schedules <Create employees={employees}/>
+            Schedules <Create employees={employees} />
           </Typography>
         )}
       </div>
@@ -220,23 +220,23 @@ const EnhancedTableToolbar = props => {
       <div className={classes.actions}>
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            {/* <Mutation mutation={DELETE_EMPLOYEE} update={update}>
-              {(deleteEmployee, { data, loading, error }) => {
+            <Mutation mutation={DELETE_SCHEDULE} update={update}>
+              {(deleteSchedule, { data, loading, error }) => {
                 if (loading) {
                   return <Loading />;
                 }
                 return (
-                  <> */}
-            <IconButton
-              aria-label="Delete"
-              // onClick={() => handleDelete(deleteEmployee, selected)}
-            >
-              <DeleteIcon />
-            </IconButton>
-            {/* </>
+                  <>
+                    <IconButton
+                      aria-label="Delete"
+                      onClick={() => handleDelete(deleteSchedule, selected)}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </>
                 );
               }}
-            </Mutation> */}
+            </Mutation>
           </Tooltip>
         ) : (
           <Tooltip title="Filter list">
@@ -279,7 +279,6 @@ export default function EnhancedTable({ schedules, employees }) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const rows = getRows(schedules);
-console.log("selected", selected);
 
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
@@ -331,6 +330,7 @@ console.log("selected", selected);
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   const resetSelected = () => setSelected([]);
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>

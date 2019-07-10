@@ -33,7 +33,6 @@ function PaperComponent(props) {
 const Update = ({ schedule, employees }) => {
   const [values, setValues] = React.useState(getScheduleObject(schedule));
   const [open, setOpen] = React.useState(false);
-  console.log(schedule, employees);
 
   const handleOpen = () => {
     setValues(getScheduleObject(schedule));
@@ -52,7 +51,6 @@ const Update = ({ schedule, employees }) => {
   const handleSave = (updateSchedule, variables) => {
     updateSchedule(variables).then(() => handleClose());
   };
-  console.log('values', values);
 
   return (
     <>
