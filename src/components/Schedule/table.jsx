@@ -18,7 +18,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Display from '../../assets/Components/Modal/Schedule/Display';
-import Update from '../../assets/Components/Modal/Employee/Update';
+import Update from '../../assets/Components/Modal/Schedule/Update';
 import Create from '../../assets/Components/Modal/Schedule/Create';
 import { Mutation } from 'react-apollo';
 import { EMPLOYEES } from './queries';
@@ -389,7 +389,7 @@ console.log("selected", selected);
                       <TableCell align="center">
                         <div className="groupInLine">
                           <Display schedule={row} />
-                          {/* <Update employee={row} /> */}
+                          <Update schedule={row} employees={employees} />
                         </div>
                       </TableCell>
                     </TableRow>
