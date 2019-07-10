@@ -8,6 +8,7 @@ import HomePage from '../Home';
 import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import Employee from '../Employee';
+import Schedule from '../Schedule';
 import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
 import NavBarMenu from '../../assets/Components/NavBarMenu'
@@ -47,6 +48,7 @@ class App extends Component {
           <Route path={ROUTES.ACCOUNT} component={AccountPage} />
           <Route path={ROUTES.ADMIN} component={AdminPage} />
           <Route path={ROUTES.EMPLOYEE} component={Employee} />
+          <Route path={ROUTES.SCHEDULE} component={Schedule} />
         </div>
       </Router>
     );

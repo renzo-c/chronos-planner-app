@@ -1,10 +1,7 @@
 import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
-// import IconButton from '@material-ui/core/IconButton';
-// import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 import SignOutButton from '../../../components/SignOut';
@@ -48,6 +45,9 @@ const NavBarMenuAuth = () => (
       </Link>
       <Link className="tabs" to={ROUTES.EMPLOYEE}>
         <Button color="inherit">EMPLOYEE</Button>
+      </Link>
+      <Link className="tabs" to={ROUTES.SCHEDULE}>
+      <Button color="inherit">SCHEDULE</Button>
       </Link>
       <div className="spaceBetween" />
       <SignOutButton className="tabs"/>
