@@ -17,6 +17,10 @@ export const CREATE_SCHEDULE = gql`
       tagName
       start
       end
+      employees {
+        id
+        user
+      }
       status
     }
   }
@@ -56,4 +60,28 @@ export const DELETE_SCHEDULE = gql`
       status
     }
   }
+`;
+
+export const ADD_EMPLOYEE_TO_SCHEDULE = gql`
+  mutation addEmployeeToSchedule(
+    $scheduleId: ID!
+    $employeeUser: String!
+  ) {
+    addEmployeeToSchedule(
+      scheduleId: $scheduleId
+      employeeUser: $employeeUser
+    ) {
+        id
+        photo
+        latitude
+        longitude
+        start
+        employee {
+          user
+        }
+        schedule {
+          id
+        }
+      }
+    }
 `;

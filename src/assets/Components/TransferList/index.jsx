@@ -10,6 +10,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
+import { Mutation } from 'react-apollo';
+import { ADD_EMPLOYEE_TO_SCHEDULE } from '../../../components/Schedule/mutations';
+import Loading from '../Loading';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,7 +35,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end',
     width: '100%',
     marginRight: '2.33em',
-    marginTop: '1.2em'
+    marginTop: '1.2em',
   },
 }));
 
@@ -103,7 +106,28 @@ export default function TransferList({ schedule, employees, closeModal }) {
 
   const handleClose = () => {
     closeModal();
-  }
+  };
+
+  const handleSave = (addEmployeeToSchedule, scheduleId, assignedEmployees) => {
+    if (assignedEmployees.length > 0) {
+      assignedEmployees.map(employeeUser => {
+        addEmployeeToSchedule({
+          variables: {
+            scheduleId,
+            employeeUser: employeeUser || '',
+          },
+        }).then(() => handleClose());
+      });
+    } else {
+      addEmployeeToSchedule({
+        variables: {
+          scheduleId,
+          employeeUser: '',
+        },
+      }).then(() => handleClose());
+    }
+  };
+
   const customList = (title, items) => (
     <Card>
       <CardHeader
@@ -189,8 +213,28 @@ export default function TransferList({ schedule, employees, closeModal }) {
       </Grid>
       <Grid item>{customList('Assigned', right)}</Grid>
       <div className={classes.modalButtons}>
-        <Button color="primary">Save</Button>
-        <Button onClick={handleClose} color="primary">Close</Button>
+        <Mutation mutation={ADD_EMPLOYEE_TO_SCHEDULE}>
+          {(addEmployeeToSchedule, { data, loading, error }) => {
+            if (loading) {
+              return <Loading />;
+            }
+            return (
+              <>
+                <Button
+                  onClick={() => {
+                    handleSave(addEmployeeToSchedule, schedule.id, right);
+                  }}
+                  color="primary"
+                >
+                  Save
+                </Button>
+              </>
+            );
+          }}
+        </Mutation>
+        <Button onClick={handleClose} color="primary">
+          Close
+        </Button>
       </div>
     </Grid>
   );
