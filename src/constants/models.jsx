@@ -14,6 +14,5 @@ export const scheduleInitValues = {
     tagName: "",
     start: "2019-08-25 17:42:53.389+00",
     end: "2019-08-25 17:42:53.389+00",
-    employeeUser: "",
     status: "disabled"
 }
