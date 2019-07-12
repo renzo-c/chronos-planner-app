@@ -52,16 +52,15 @@ const Assign = ({ schedule, employees }) => {
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          Assign or Remove employees to the schedule
+          Assign or Remove employees to {schedule.tagName}
         </DialogTitle>
         <DialogContent>
-          <TransferList schedule={schedule} employees={employees} />
+          <TransferList
+            schedule={schedule}
+            employees={employees}
+            closeModal={handleClose}
+          />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Close
-          </Button>
-        </DialogActions>
       </Dialog>
     </div>
   );

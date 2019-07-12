@@ -27,6 +27,13 @@ const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(0.5, 0),
   },
+  modalButtons: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    marginRight: '2.33em',
+    marginTop: '1.2em'
+  },
 }));
 
 function not(a, b) {
@@ -41,18 +48,24 @@ function union(a, b) {
   return [...a, ...not(b, a)];
 }
 
-export default function TransferList({ schedule, employees }) {
+function getAvailableEmployees(totalEmployees, assignedEmployees) {
+  let usersList = totalEmployees.map(employee => employee.user);
+  return not(usersList, assignedEmployees);
+}
+export default function TransferList({ schedule, employees, closeModal }) {
   const classes = useStyles();
-  const totalEmployees = employees.map(employee => employee.user);
   const assignedEmployees = schedule.employees.map(employee => employee.user);
+  const availableEmployees = getAvailableEmployees(
+    employees,
+    assignedEmployees
+  );
   const [checked, setChecked] = React.useState([]);
-  const [left, setLeft] = React.useState(totalEmployees);
+  const [left, setLeft] = React.useState(availableEmployees);
   const [right, setRight] = React.useState(assignedEmployees);
 
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
 
-  
   const handleToggle = value => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -88,6 +101,9 @@ export default function TransferList({ schedule, employees }) {
     setChecked(not(checked, rightChecked));
   };
 
+  const handleClose = () => {
+    closeModal();
+  }
   const customList = (title, items) => (
     <Card>
       <CardHeader
@@ -113,7 +129,6 @@ export default function TransferList({ schedule, employees }) {
       <List className={classes.list} dense component="div" role="list">
         {items.map(value => {
           const labelId = `transfer-list-all-item-${value}-label`;
-
           return (
             <ListItem
               key={value}
@@ -137,8 +152,8 @@ export default function TransferList({ schedule, employees }) {
       </List>
     </Card>
   );
-  console.log('totalEmployees', totalEmployees);
-  console.log('assignedEmployees', assignedEmployees);
+  console.log('left', left);
+  console.log('right', right);
   return (
     <Grid
       container
@@ -147,7 +162,7 @@ export default function TransferList({ schedule, employees }) {
       alignItems="center"
       className={classes.root}
     >
-      <Grid item>{customList('Choices', left)}</Grid>
+      <Grid item>{customList('Not assigned', left)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -172,7 +187,11 @@ export default function TransferList({ schedule, employees }) {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList('Chosen', right)}</Grid>
+      <Grid item>{customList('Assigned', right)}</Grid>
+      <div className={classes.modalButtons}>
+        <Button color="primary">Save</Button>
+        <Button onClick={handleClose} color="primary">Close</Button>
+      </div>
     </Grid>
   );
 }
