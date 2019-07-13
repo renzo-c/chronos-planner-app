@@ -229,6 +229,7 @@ export default function TransferList({ schedule, employees, closeModal }) {
                 >
                   Save
                 </Button>
+                {error && <ErrorMessage error={error} />}
               </>
             );
           }}

@@ -5,7 +5,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
-    backgroundColor: 'green',
   },
   centering: {
     position: 'absolute',
@@ -20,7 +19,7 @@ const Loading = () => {
   return (
     <div className={classes.root}>
       <div className={classes.centering}>
-      <CircularProgress />
+        <CircularProgress />
       </div>
     </div>
   );
