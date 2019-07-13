@@ -9,7 +9,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
+import DateTimePickerModal from '../../DateTimePicker';
 import Loading from '../../Loading';
 import ErrorMessage from '../../ErrorMessage';
 import { scheduleInitValues } from '../../../../constants/models';
@@ -35,6 +37,12 @@ function PaperComponent(props) {
   );
 }
 
+// const dateTimeAdornment = (
+//   <InputAdornment position={'start'}>
+
+//   </InputAdornment>
+// );
+
 const Create = () => {
   const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState(
@@ -51,12 +59,17 @@ const Create = () => {
   };
 
   const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
+    if (event instanceof Date) {
+      setValues({ ...values, [name]: event });
+    } else {
+      setValues({ ...values, [name]: event.target.value });
+    }
   };
 
   const handleSave = (createSchedule, variables) => {
     createSchedule(variables).then(() => handleClose());
   };
+  console.log("values-Create", values);
   return (
     <>
       <Tooltip title="New Schedule">
@@ -87,31 +100,17 @@ const Create = () => {
               shrink: true,
             }}
           />
-          <TextField
+          <DateTimePickerModal
             id="start"
             label="Start"
-            placeholder="Starts at..."
             value={values.start}
             onChange={handleChange('start')}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
           />
-          <TextField
-            id="end"
+          <DateTimePickerModal
+            id="start"
             label="End"
-            placeholder="Ends at..."
             value={values.end}
             onChange={handleChange('end')}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
           />
           <TextField
             id="status"

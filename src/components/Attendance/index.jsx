@@ -9,8 +9,6 @@ import '../../styles/constantStyle.css';
 const Attendance = () => {
   const { data: attendances, loading, error } = useQuery(ATTENDANCES);
 
-  console.log('attendances', attendances);
-
   if (loading) return <Loading />;
   if (error) return <ErrorMessage error={error} />;
 

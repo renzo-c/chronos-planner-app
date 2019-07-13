@@ -177,8 +177,6 @@ export default function TransferList({ schedule, employees, closeModal }) {
       </List>
     </Card>
   );
-  console.log('left', left);
-  console.log('right', right);
   return (
     <Grid
       container

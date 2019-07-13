@@ -19,7 +19,7 @@ const Schedule = () => {
     loading: scheduleLoading,
     error: scheduleError,
   } = useQuery(SCHEDULES);
-console.log("schedules", schedules);
+
   if (scheduleLoading || !schedules || employeeLoading || !employees)
     return <Loading />;
   if (employeeError) return <ErrorMessage error={employeeError} />;

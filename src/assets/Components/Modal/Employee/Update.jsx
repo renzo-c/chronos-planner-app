@@ -33,11 +33,6 @@ const Update = ({ employee }) => {
   const [open, setOpen] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
 
-  // useEffect(() => {
-  //   setValues(getEmployeeCleanObject(employee));
-  //   console.log("employeeChanged", values);
-  // }, [employee]);
-
   const handleOpen = () => {
     setValues(getEmployeeCleanObject(employee));
     setOpen(true);
