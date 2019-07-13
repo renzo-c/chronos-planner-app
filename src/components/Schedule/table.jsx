@@ -376,8 +376,12 @@ export default function EnhancedTable({ schedules, employees }) {
                       >
                         {row.tagName}
                       </TableCell>
-                      <TableCell align="center">{row.start}</TableCell>
-                      <TableCell align="center">{row.end}</TableCell>
+                      <TableCell align="center">
+                        {new Date(row.start).toString().slice(0, 21)}
+                      </TableCell>
+                      <TableCell align="center">
+                        {new Date(row.end).toString().slice(0, 21)}
+                      </TableCell>
                       <TableCell align="center">{row.status}</TableCell>
                       <TableCell align="center">
                         <div className="groupInLine">

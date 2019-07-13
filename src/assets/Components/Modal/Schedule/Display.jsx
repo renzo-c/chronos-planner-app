@@ -67,7 +67,7 @@ const Display = ({schedule}) => {
             disabled
             id="start"
             label="Start"
-            value={schedule.start}
+            value={new Date(schedule.start).toString().slice(0, 21)}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -76,16 +76,7 @@ const Display = ({schedule}) => {
             disabled
             id="end"
             label="End"
-            value={schedule.end}
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-          />
-          <TextField
-            disabled
-            id="user"
-            label="Responsible"
-            value={schedule.user}
+            value={new Date(schedule.end).toString().slice(0, 21)}
             className={classes.textField}
             margin="normal"
             variant="outlined"

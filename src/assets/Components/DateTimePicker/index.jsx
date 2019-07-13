@@ -78,7 +78,7 @@ const useStyles = makeStyles({
 
 const DateTimePickerModal = ({ value, onChange, label }) => {
   const classes = useStyles();
-
+console.log("value", value);
   return (
     <Fragment>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
