@@ -7,3 +7,4 @@ export const ADMIN = '/admin';
 export const PASSWORD_FORGET = '/pw-forget';
 export const EMPLOYEE = '/employee';
 export const SCHEDULE = '/schedule';
+export const ATTENDANCE = '/attendance';

@@ -40,16 +40,19 @@ const NavBarMenuAuth = () => (
       <Link className="tabs" to={ROUTES.HOME}>
         <Button color="inherit">HOME</Button>
       </Link>
-      <Link className="tabs" to={ROUTES.ACCOUNT}>
-        <Button color="inherit">ACCOUNT</Button>
-      </Link>
       <Link className="tabs" to={ROUTES.EMPLOYEE}>
         <Button color="inherit">EMPLOYEE</Button>
       </Link>
       <Link className="tabs" to={ROUTES.SCHEDULE}>
       <Button color="inherit">SCHEDULE</Button>
       </Link>
+      <Link className="tabs" to={ROUTES.ATTENDANCE}>
+      <Button color="inherit">ATTENDANCE</Button>
+      </Link>
       <div className="spaceBetween" />
+      <Link className="tabs" to={ROUTES.ACCOUNT}>
+        <Button color="inherit">ACCOUNT</Button>
+      </Link>
       <SignOutButton className="tabs"/>
     </Toolbar>
   </AppBar>

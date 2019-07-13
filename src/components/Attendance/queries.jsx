@@ -8,6 +8,9 @@ export const ATTENDANCES = gql`
       }
       schedule {
           id
+          tagName
+          start
+          end
       }
     }
   }
