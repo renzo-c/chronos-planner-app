@@ -63,25 +63,20 @@ export const DELETE_SCHEDULE = gql`
 `;
 
 export const ADD_EMPLOYEE_TO_SCHEDULE = gql`
-  mutation addEmployeeToSchedule(
-    $scheduleId: ID!
-    $employeeUser: String!
-  ) {
+  mutation addEmployeeToSchedule($scheduleId: ID!, $employeeUser: String!) {
     addEmployeeToSchedule(
       scheduleId: $scheduleId
       employeeUser: $employeeUser
     ) {
+      id
+      tagName
+      start
+      end
+      employees {
         id
-        photo
-        latitude
-        longitude
-        start
-        employee {
-          user
-        }
-        schedule {
-          id
-        }
+        user
       }
+      status
     }
+  }
 `;

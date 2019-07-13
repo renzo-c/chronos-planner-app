@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import { Mutation } from 'react-apollo';
 import { ADD_EMPLOYEE_TO_SCHEDULE } from '../../../components/Schedule/mutations';
+import { SCHEDULES } from '../../../components/Schedule/queries';
 import Loading from '../Loading';
 
 const useStyles = makeStyles(theme => ({
