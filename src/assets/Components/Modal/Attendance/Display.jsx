@@ -37,6 +37,7 @@ const Display = ({ attendance }) => {
   const handleClose = () => {
     setOpen(false);
   };
+  console.log(attendance);
   return (
     <div>
       <Tooltip title="Show info">
@@ -101,9 +102,21 @@ const Display = ({ attendance }) => {
           />
           <TextField
             disabled
+            id="start"
+            label="start"
+            value={attendance.start ? 
+              new Date(attendance.start).toString().slice(0, 21) :
+              'Does not start yet'
+            }
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            disabled
             id="shouldHaveStarted"
             label="Should have started"
-            value={attendance.schedule.start}
+            value={new Date(attendance.schedule.start).toString().slice(0, 21)}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -112,7 +125,7 @@ const Display = ({ attendance }) => {
             disabled
             id="end"
             label="Should have ended"
-            value={attendance.schedule.end}
+            value={new Date(attendance.schedule.end).toString().slice(0, 21)}
             className={classes.textField}
             margin="normal"
             variant="outlined"

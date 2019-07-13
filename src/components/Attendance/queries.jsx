@@ -17,6 +17,7 @@ export const ATTENDANCES = gql`
           start
           end
       }
+      status
     }
   }
 `;

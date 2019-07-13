@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import DateTimePickerModal from '../../DateTimePicker';
 import Loading from '../../Loading';
 import ErrorMessage from '../../ErrorMessage';
 import { Mutation } from 'react-apollo';
@@ -40,7 +41,11 @@ const Update = ({ schedule }) => {
   };
 
   const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
+    if (event instanceof Date) {
+      setValues({ ...values, [name]: event });
+    } else {
+      setValues({ ...values, [name]: event.target.value });
+    }
   };
 
   const handleSave = (updateSchedule, variables) => {
@@ -50,10 +55,7 @@ const Update = ({ schedule }) => {
   return (
     <>
       <Tooltip title="Update Schedule">
-        <IconButton
-          aria-label="Update Schedule"
-          onClick={handleOpen}
-        >
+        <IconButton aria-label="Update Schedule" onClick={handleOpen}>
           <i className={'material-icons'}>edit</i>
         </IconButton>
       </Tooltip>
@@ -80,31 +82,17 @@ const Update = ({ schedule }) => {
               shrink: true,
             }}
           />
-          <TextField
+          <DateTimePickerModal
             id="start"
-            label="Start Name"
-            placeholder="Starts at..."
+            label="Start"
             value={values.start}
             onChange={handleChange('start')}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
           />
-          <TextField
-            id="end"
+          <DateTimePickerModal
+            id="start"
             label="End"
-            placeholder="Ends at..."
             value={values.end}
             onChange={handleChange('end')}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
           />
           <TextField
             id="status"

@@ -339,7 +339,11 @@ export default function EnhancedTable({ attendances }) {
                       <TableCell align="center">{row.photo}</TableCell>
                       <TableCell align="center">{row.latitud}</TableCell>
                       <TableCell align="center">{row.longitud}</TableCell>
-                      <TableCell align="center">{row.start}</TableCell>
+                      <TableCell align="center">
+                        {row.start
+                          ? new Date(row.start).toString().slice(0, 21)
+                          : 'Does not start yet'}
+                      </TableCell>
                       <TableCell align="center">
                         <div className="groupInLine">
                           <Display attendance={row} />
