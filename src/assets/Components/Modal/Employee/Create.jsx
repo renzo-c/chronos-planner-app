@@ -24,11 +24,15 @@ const getEmployeeCleanObject = obj =>
   JSON.parse(JSON.stringify(employeeInitValues));
 
 const update = (cache, { data: { createEmployee } }) => {
-  const { employees } = cache.readQuery({ query: EMPLOYEES });
-  cache.writeQuery({
-    query: EMPLOYEES,
-    data: { employees: employees.concat([createEmployee]) },
-  });
+  try {
+    const { employees } = cache.readQuery({ query: EMPLOYEES });
+    cache.writeQuery({
+      query: EMPLOYEES,
+      data: { employees: employees.concat([createEmployee]) },
+    });
+  } catch {
+    console.log('Update prop of createEmployee', error);
+  }
 };
 
 function PaperComponent(props) {

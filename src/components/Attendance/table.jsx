@@ -17,55 +17,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import Display from '../../assets/Components/Modal/Employee/Display';
-import Update from '../../assets/Components/Modal/Employee/Update';
-import Create from '../../assets/Components/Modal/Employee/Create';
-import Loading from '../../assets/Components/Loading';
-import { Mutation } from 'react-apollo';
-import { EMPLOYEES } from './queries';
-import { SCHEDULES } from '../Schedule/queries';
-import { ATTENDANCES } from '../Attendance/queries';
-import { DELETE_EMPLOYEE } from './mutations';
-import './style.css';
+import Display from '../../assets/Components/Modal/Attendance/Display';
 
-const createData = (
-  firstName,
-  lastName,
-  user,
-  password,
-  dni,
-  address,
-  phone,
-  email,
-  status
-) => {
-  return {
-    firstName,
-    lastName,
-    user,
-    password,
-    dni,
-    address,
-    phone,
-    email,
-    status,
-  };
-};
-
-const getRows = queryResult =>
-  queryResult.map(row => {
-    return createData(
-      row.firstName,
-      row.lastName,
-      row.user,
-      row.password,
-      row.dni,
-      row.address,
-      row.phone,
-      row.email,
-      row.status
-    );
-  });
+const getRows = obj => JSON.parse(JSON.stringify(obj));
 
 function desc(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -95,16 +49,27 @@ function getSorting(order, orderBy) {
 
 const headRows = [
   {
-    id: 'firstName',
+    id: 'tagName',
     numeric: false,
     disablePadding: true,
-    label: 'First Name',
+    label: 'Schedule',
   },
-  { id: 'lastName', numeric: false, disablePadding: false, label: 'Last Name' },
-  { id: 'user', numeric: false, disablePadding: false, label: 'User' },
-  { id: 'phone', numeric: false, disablePadding: false, label: 'Phone' },
-  { id: 'email', numeric: false, disablePadding: false, label: 'Email' },
-  { id: 'actions', numeric: false, disablePadding: false, label: 'Actions' },
+  { id: 'user', numeric: false, disablePadding: false, label: 'Employee' },
+  { id: 'photo', numeric: false, disablePadding: false, label: 'Photo' },
+  { id: 'latitude', numeric: false, disablePadding: false, label: 'Latitude' },
+  {
+    id: 'longitude',
+    numeric: false,
+    disablePadding: false,
+    label: 'Longitude',
+  },
+  { id: 'started', numeric: false, disablePadding: false, label: 'Started' },
+  {
+    id: 'status',
+    numeric: false,
+    disablePadding: false,
+    label: 'Status',
+  },
 ];
 
 function EnhancedTableHead(props) {
@@ -128,7 +93,7 @@ function EnhancedTableHead(props) {
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={numSelected === rowCount}
             onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'Select all desserts' }}
+            inputProps={{ 'aria-label': 'Select all attendances' }}
           />
         </TableCell>
         {headRows.map(row => {
@@ -191,51 +156,18 @@ const useToolbarStyles = makeStyles(theme => ({
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const { numSelected, selected, resetSelected } = props;
+  const { numSelected, selected } = props;
 
-  const handleDelete = (deleteEmployee, selected) => {
-    selected.map(user => {
-      deleteEmployee({ variables: { user } });
+  const update = (cache, { data: { deleteSchedule } }) => {
+    const { schedules } = cache.readQuery({ query: SCHEDULES });
+    cache.writeQuery({
+      query: SCHEDULES,
+      data: {
+        schedules: schedules.filter(
+          schedule => schedule.id !== deleteSchedule.id
+        ),
+      },
     });
-    resetSelected();
-  };
-
-  const update = (cache, { data: { deleteEmployee } }) => {
-    try {
-      const { employees } = cache.readQuery({ query: EMPLOYEES });
-      const { schedules } = cache.readQuery({ query: SCHEDULES });
-      const { attendances } = cache.readQuery({ query: ATTENDANCES });
-
-      const newSchedules = schedules.map(schedule => {
-        const newEmployees = schedule.employees.filter(
-          employee => employee.user !== deleteEmployee.user
-        );
-        schedule['employees'] = newEmployees;
-        return schedule;
-      });
-
-      const newAttendances = attendances.filter(
-        attendance => attendance.employee.user !== deleteEmployee.user
-      );
-      cache.writeQuery({
-        query: EMPLOYEES,
-        data: {
-          employees: employees.filter(
-            employee => employee.user !== deleteEmployee.user
-          ),
-        },
-      });
-      cache.writeQuery({
-        query: SCHEDULES,
-        data: { schedules: newSchedules },
-      });
-      cache.writeQuery({
-        query: ATTENDANCES,
-        data: { attendances: newAttendances },
-      });
-    } catch (error) {
-      console.log('employeeUpdateDeleteError', error);
-    }
   };
 
   return (
@@ -251,7 +183,7 @@ const EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            EMPLOYEES <Create />
+            Attendances
           </Typography>
         )}
       </div>
@@ -259,28 +191,9 @@ const EnhancedTableToolbar = props => {
       <div className={classes.actions}>
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            <Mutation
-              mutation={DELETE_EMPLOYEE}
-              update={update}
-              // awaitRefetchQueries={true}
-              // refetchQueries={[{ query: EMPLOYEES, SCHEDULES, ATTENDANCES }]}
-            >
-              {(deleteEmployee, { data, loading, error }) => {
-                if (loading) {
-                  return <Loading />;
-                }
-                return (
-                  <>
-                    <IconButton
-                      aria-label="Delete"
-                      onClick={() => handleDelete(deleteEmployee, selected)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </>
-                );
-              }}
-            </Mutation>
+            <IconButton aria-label="Delete">
+              <DeleteIcon />
+            </IconButton>
           </Tooltip>
         ) : (
           <Tooltip title="Filter list">
@@ -315,24 +228,23 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function EnhancedTable({ employees }) {
+export default function EnhancedTable({ attendances }) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('calories');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-  const rows = getRows(employees);
+  const rows = getRows(attendances);
 
   function handleRequestSort(event, property) {
     const isDesc = orderBy === property && order === 'desc';
     setOrder(isDesc ? 'asc' : 'desc');
     setOrderBy(property);
   }
-
   function handleSelectAllClick(event) {
     if (event.target.checked) {
-      const newSelecteds = rows.map(n => n.user);
+      const newSelecteds = rows.map(n => n.id);
       setSelected(newSelecteds);
       return;
     }
@@ -374,15 +286,12 @@ export default function EnhancedTable({ employees }) {
   const emptyRows =
     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-  const resetSelected = () => setSelected([]);
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar
           numSelected={selected.length}
           selected={selected}
-          resetSelected={resetSelected}
         />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
@@ -398,7 +307,7 @@ export default function EnhancedTable({ employees }) {
               {stableSort(rows, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.user);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
@@ -412,7 +321,7 @@ export default function EnhancedTable({ employees }) {
                     >
                       <TableCell padding="checkbox">
                         <Checkbox
-                          onClick={event => handleClick(event, row.user)}
+                          onClick={event => handleClick(event, row.id)}
                           checked={isItemSelected}
                           inputProps={{ 'aria-labelledby': labelId }}
                         />
@@ -424,16 +333,20 @@ export default function EnhancedTable({ employees }) {
                         scope="row"
                         padding="none"
                       >
-                        {row.firstName}
+                        {row.schedule.tagName}
                       </TableCell>
-                      <TableCell align="center">{row.lastName}</TableCell>
-                      <TableCell align="center">{row.user}</TableCell>
-                      <TableCell align="center">{row.phone}</TableCell>
-                      <TableCell align="center">{row.email}</TableCell>
+                      <TableCell align="center">{row.employee.user}</TableCell>
+                      <TableCell align="center">{row.photo}</TableCell>
+                      <TableCell align="center">{row.latitud}</TableCell>
+                      <TableCell align="center">{row.longitud}</TableCell>
+                      <TableCell align="center">
+                        {row.start
+                          ? new Date(row.start).toString().slice(0, 21)
+                          : 'Does not start yet'}
+                      </TableCell>
                       <TableCell align="center">
                         <div className="groupInLine">
-                          <Display employee={row} />
-                          <Update employee={row} />
+                          <Display attendance={row} />
                         </div>
                       </TableCell>
                     </TableRow>

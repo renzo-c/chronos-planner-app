@@ -17,22 +17,23 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import Create from '../../assets/Components/Modal/Schedule/Create';
 import Display from '../../assets/Components/Modal/Schedule/Display';
 import Update from '../../assets/Components/Modal/Schedule/Update';
-import Create from '../../assets/Components/Modal/Schedule/Create';
+import Assign from '../../assets/Components/Modal/Schedule/Assign';
 import { Mutation } from 'react-apollo';
 import { SCHEDULES } from './queries';
 import { DELETE_SCHEDULE } from './mutations';
 import Loading from '../../assets/Components/Loading';
 // import './style.css';
 
-const createData = (id, tagName, start, end, { user }, status) => {
+const createData = (id, tagName, start, end, employees, status) => {
   return {
     id,
     tagName,
     start,
     end,
-    user,
+    employees,
     status,
   };
 };
@@ -44,7 +45,7 @@ const getRows = queryResult =>
       row.tagName,
       row.start,
       row.end,
-      row.employee,
+      row.employees,
       row.status
     );
   });
@@ -84,12 +85,6 @@ const headRows = [
   },
   { id: 'start', numeric: false, disablePadding: false, label: 'Start' },
   { id: 'end', numeric: false, disablePadding: false, label: 'End' },
-  {
-    id: 'user',
-    numeric: false,
-    disablePadding: false,
-    label: 'Responsible',
-  },
   { id: 'status', numeric: false, disablePadding: false, label: 'Status' },
   { id: 'actions', numeric: false, disablePadding: false, label: 'Actions' },
 ];
@@ -178,7 +173,7 @@ const useToolbarStyles = makeStyles(theme => ({
 
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
-  const { numSelected, selected, resetSelected, employees } = props;
+  const { numSelected, selected, resetSelected } = props;
 
   const handleDelete = (deleteSchedule, selected) => {
     selected.map(schedule => {
@@ -212,7 +207,7 @@ const EnhancedTableToolbar = props => {
           </Typography>
         ) : (
           <Typography variant="h6" id="tableTitle">
-            Schedules <Create employees={employees} />
+            Schedules <Create />
           </Typography>
         )}
       </div>
@@ -338,7 +333,6 @@ export default function EnhancedTable({ schedules, employees }) {
           numSelected={selected.length}
           selected={selected}
           resetSelected={resetSelected}
-          employees={employees}
         />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
@@ -382,14 +376,18 @@ export default function EnhancedTable({ schedules, employees }) {
                       >
                         {row.tagName}
                       </TableCell>
-                      <TableCell align="center">{row.start}</TableCell>
-                      <TableCell align="center">{row.end}</TableCell>
-                      <TableCell align="center">{row.user}</TableCell>
+                      <TableCell align="center">
+                        {new Date(row.start).toString().slice(0, 21)}
+                      </TableCell>
+                      <TableCell align="center">
+                        {new Date(row.end).toString().slice(0, 21)}
+                      </TableCell>
                       <TableCell align="center">{row.status}</TableCell>
                       <TableCell align="center">
                         <div className="groupInLine">
                           <Display schedule={row} />
-                          <Update schedule={row} employees={employees} />
+                          <Update schedule={row} />
+                          <Assign schedule={row} employees={employees} />
                         </div>
                       </TableCell>
                     </TableRow>

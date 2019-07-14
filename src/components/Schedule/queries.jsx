@@ -7,17 +7,19 @@ export const SCHEDULES = gql`
       tagName
       start
       end
-      status
-      employee {
+      employees {
+        id
         firstName
         lastName
         user
+        password
         dni
         phone
         address
         email
         status
       }
+      status
     }
   }
 `;

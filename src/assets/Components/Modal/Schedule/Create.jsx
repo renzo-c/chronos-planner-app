@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Draggable from 'react-draggable';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import DateTimePickerModal from '../../DateTimePicker';
 import Loading from '../../Loading';
 import ErrorMessage from '../../ErrorMessage';
 import { scheduleInitValues } from '../../../../constants/models';
@@ -17,8 +18,7 @@ import { Mutation } from 'react-apollo';
 import { CREATE_SCHEDULE } from '../../../../components/Schedule/mutations';
 import { SCHEDULES } from '../../../../components/Schedule/queries';
 
-const getScheduleCleanObject = obj =>
-  JSON.parse(JSON.stringify(obj));
+const getScheduleCleanObject = obj => JSON.parse(JSON.stringify(obj));
 
 const update = (cache, { data: { createSchedule } }) => {
   const { schedules } = cache.readQuery({ query: SCHEDULES });
@@ -36,7 +36,13 @@ function PaperComponent(props) {
   );
 }
 
-const Create = ({ employees }) => {
+// const dateTimeAdornment = (
+//   <InputAdornment position={'start'}>
+
+//   </InputAdornment>
+// );
+
+const Create = () => {
   const [open, setOpen] = React.useState(false);
   const [values, setValues] = React.useState(
     getScheduleCleanObject(scheduleInitValues)
@@ -52,7 +58,11 @@ const Create = ({ employees }) => {
   };
 
   const handleChange = name => event => {
-    setValues({ ...values, [name]: event.target.value });
+    if (event instanceof Date) {
+      setValues({ ...values, [name]: event });
+    } else {
+      setValues({ ...values, [name]: event.target.value });
+    }
   };
 
   const handleSave = (createSchedule, variables) => {
@@ -88,48 +98,18 @@ const Create = ({ employees }) => {
               shrink: true,
             }}
           />
-          <TextField
+          <DateTimePickerModal
             id="start"
             label="Start"
-            placeholder="Starts at..."
             value={values.start}
             onChange={handleChange('start')}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
           />
-          <TextField
-            id="end"
+          <DateTimePickerModal
+            id="start"
             label="End"
-            placeholder="Ends at..."
             value={values.end}
             onChange={handleChange('end')}
-            fullWidth
-            margin="normal"
-            variant="outlined"
-            InputLabelProps={{
-              shrink: true,
-            }}
           />
-          <TextField
-            id="user"
-            select
-            label="Responsible"
-            fullWidth
-            value={values.employeeUser}
-            onChange={handleChange('employeeUser')}
-            margin="normal"
-            variant="outlined"
-          >
-            {employees.map((option, index) => (
-              <MenuItem key={index} value={option.user}>
-                {option.firstName} {option.lastName}
-              </MenuItem>
-            ))}
-          </TextField>
           <TextField
             id="status"
             select

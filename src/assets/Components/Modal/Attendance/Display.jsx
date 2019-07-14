@@ -26,7 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Display = ({schedule}) => {
+const Display = ({ attendance }) => {
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
 
@@ -51,14 +51,50 @@ const Display = ({schedule}) => {
         aria-labelledby="draggable-dialog-title"
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          Schedule Information
+          Attendance Information
         </DialogTitle>
         <DialogContent>
           <TextField
             disabled
             id="tagName"
-            label="Name"
-            value={schedule.tagName}
+            label="Schedule"
+            value={attendance.schedule.tagName}
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            disabled
+            id="user"
+            label="Employee"
+            value={attendance.employee.user}
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            disabled
+            id="photo"
+            label="Photo"
+            value={attendance.photo || 'Does not start yet'}
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            disabled
+            id="latitude"
+            label="Latitude"
+            value={attendance.latitude || 'Does not start yet'}
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            disabled
+            id="longitud"
+            label="Longitud"
+            value={attendance.longitud || 'Does not start yet'}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -66,8 +102,21 @@ const Display = ({schedule}) => {
           <TextField
             disabled
             id="start"
-            label="Start"
-            value={new Date(schedule.start).toString().slice(0, 21)}
+            label="start"
+            value={
+              attendance.start
+                ? new Date(attendance.start).toString().slice(0, 21)
+                : 'Does not start yet'
+            }
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            disabled
+            id="shouldHaveStarted"
+            label="Should have started"
+            value={new Date(attendance.schedule.start).toString().slice(0, 21)}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -75,8 +124,8 @@ const Display = ({schedule}) => {
           <TextField
             disabled
             id="end"
-            label="End"
-            value={new Date(schedule.end).toString().slice(0, 21)}
+            label="Should have ended"
+            value={new Date(attendance.schedule.end).toString().slice(0, 21)}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -85,7 +134,7 @@ const Display = ({schedule}) => {
             disabled
             id="status"
             label="Status"
-            value={schedule.status}
+            value={attendance.status}
             className={classes.textField}
             margin="normal"
             variant="outlined"
@@ -99,6 +148,6 @@ const Display = ({schedule}) => {
       </Dialog>
     </div>
   );
-}
+};
 
 export default Display;
