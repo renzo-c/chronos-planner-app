@@ -6,10 +6,19 @@ import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 import SignOutButton from '../../../components/SignOut';
 import '../../../styles/navBarMenu.css';
+import { AuthUserContext } from '../../../components/Session';
 
-const NavBarMenu = ({ authUser }) => {
-  console.log('authUser', authUser);
-  return <>{authUser ? <NavBarMenuAuth /> : <NavBarMenuNonAuth />}</>;
+const NavBarMenu = () => {
+  return (
+    <>
+      <AuthUserContext.Consumer>
+        {authUser => {
+          console.log('authUser', authUser);
+          return authUser ? <NavBarMenuAuth /> : <NavBarMenuNonAuth />;
+        }}
+      </AuthUserContext.Consumer>
+    </>
+  );
 };
 
 export default NavBarMenu;
@@ -44,17 +53,16 @@ const NavBarMenuAuth = () => (
         <Button color="inherit">EMPLOYEE</Button>
       </Link>
       <Link className="tabs" to={ROUTES.SCHEDULE}>
-      <Button color="inherit">SCHEDULE</Button>
+        <Button color="inherit">SCHEDULE</Button>
       </Link>
       <Link className="tabs" to={ROUTES.ATTENDANCE}>
-      <Button color="inherit">ATTENDANCE</Button>
+        <Button color="inherit">ATTENDANCE</Button>
       </Link>
       <div className="spaceBetween" />
       <Link className="tabs" to={ROUTES.ACCOUNT}>
         <Button color="inherit">ACCOUNT</Button>
       </Link>
-      <SignOutButton className="tabs"/>
+      <SignOutButton className="tabs" />
     </Toolbar>
   </AppBar>
 );
-
