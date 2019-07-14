@@ -11,36 +11,16 @@ import Employee from '../Employee';
 import Schedule from '../Schedule';
 import Attendance from '../Attendance';
 import * as ROUTES from '../../constants/routes';
-import { withFirebase } from '../Firebase';
 import NavBarMenu from '../../assets/Components/NavBarMenu';
+import { withAuthentication } from '../Session/index';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      authUser: null,
-    };
-  }
-
-  componentDidMount() {
-    this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
-      authUser
-        ? this.setState({ authUser })
-        : this.setState({ authUser: null });
-    });
-  }
-
-  componentWillUnmount() {
-    this.listener();
-  }
-
   render() {
     return (
       <Router>
         <div>
-          <NavBarMenu authUser={this.state.authUser} />
+          <NavBarMenu />
           <hr />
-
           <Route exact path={ROUTES.LANDING} component={LandingPage} />
           <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
           <Route path={ROUTES.SIGN_IN} component={SignInPage} />
@@ -57,4 +37,4 @@ class App extends Component {
   }
 }
 
-export default withFirebase(App);
+export default withAuthentication(App);

@@ -5,6 +5,7 @@ import ErrorMessage from '../../assets/Components/ErrorMessage';
 import { useQuery } from 'react-apollo-hooks';
 import { SCHEDULES } from './queries';
 import { EMPLOYEES } from '../Employee/queries';
+import { withAuthorization } from '../Session';
 import '../../styles/constantStyle.css';
 
 const Schedule = () => {
@@ -29,4 +30,5 @@ const Schedule = () => {
   );
 };
 
-export default Schedule;
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(Schedule);

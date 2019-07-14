@@ -4,6 +4,7 @@ import { ATTENDANCES } from './queries';
 import Table from './table';
 import Loading from '../../assets/Components/Loading';
 import ErrorMessage from '../../assets/Components/ErrorMessage';
+import { withAuthorization } from '../Session';
 import '../../styles/constantStyle.css';
 
 const Attendance = () => {
@@ -22,4 +23,5 @@ const Attendance = () => {
   );
 };
 
-export default Attendance;
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(Attendance);

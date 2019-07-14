@@ -3,6 +3,7 @@ import { EMPLOYEES } from './queries';
 import Table from './table';
 import { Query } from 'react-apollo';
 import Loading from '../../assets/Components/Loading';
+import { withAuthorization } from '../Session';
 import '../../styles/constantStyle.css';
 
 class Employee extends Component {
@@ -22,4 +23,5 @@ class Employee extends Component {
   }
 }
 
-export default Employee;
+const condition = authUser => !!authUser;
+export default withAuthorization(condition)(Employee);
