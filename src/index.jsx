@@ -8,9 +8,9 @@ import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
-import './styles/index.css';
 import App from './components/App/App';
 import Firebase, { FirebaseContext } from './components/Firebase';
+import './styles/index.css';
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
@@ -24,8 +24,8 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const cache = new InMemoryCache();
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4005/',
-  // uri: 'https://chronos-planner-server.herokuapp.com/',
+  // uri: 'http://localhost:4005/',
+  uri: 'https://chronos-planner-server.herokuapp.com/',
 });
 
 const link = ApolloLink.from([errorLink, httpLink]);

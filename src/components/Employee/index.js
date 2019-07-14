@@ -10,6 +10,7 @@ class Employee extends Component {
   render() {
     return (
       <>
+      <div id='backgroundEmployee'></div>
         <Query query={EMPLOYEES}>
           {({ loading, error, data }) => {
             const { employees } = data;

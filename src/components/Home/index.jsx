@@ -1,13 +1,12 @@
 import React from 'react';
 import { withAuthorization } from '../Session';
-// import SlideBarMenu from '../../assets/Components/SlideBarMenu/index';
-import '../../styles/constantStyle.css';
+import './style.css';
 
 const Home = () => (
-  <div className="bodyHome">
+  <>
+    <div id="backgroundHome" />
     This is the Home page
-    {/* <SlideBarMenu /> */}
-  </div>
+  </>
 );
 
 const condition = authUser => !!authUser;
