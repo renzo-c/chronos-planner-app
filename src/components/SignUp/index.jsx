@@ -1,21 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import SignUpForm from './signUpForm';
-import * as ROUTES from '../../constants/routes';
+import './style.css';
 
 const SignUpPage = () => (
-  <div>
-    <h1>SignUp</h1>
-    <SignUpForm />
-  </div>
-);
-
-const SignUpLink = () => (
-  <p>
-    Don&apos;t have an account?
-    <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-  </p>
+  <>
+    <div id="container">
+      <SignUpForm />
+    </div>
+  </>
 );
 
 export default SignUpPage;
-export { SignUpForm, SignUpLink };
+export { SignUpForm };

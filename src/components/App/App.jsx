@@ -20,7 +20,7 @@ class App extends Component {
       <Router>
         <div>
           <NavBarMenu />
-          <hr />
+          <hr className='hideElement'/>
           <Route exact path={ROUTES.LANDING} component={LandingPage} />
           <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
           <Route path={ROUTES.SIGN_IN} component={SignInPage} />

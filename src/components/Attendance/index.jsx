@@ -5,11 +5,12 @@ import Table from './table';
 import Loading from '../../assets/Components/Loading';
 import ErrorMessage from '../../assets/Components/ErrorMessage';
 import { withAuthorization } from '../Session';
-import '../../styles/constantStyle.css';
+import './style.css';
 
 const Attendance = () => {
   return (
     <>
+    <div id='backgroundAttendance'></div>
       <Query query={ATTENDANCES} fetchPolicy="network-only">
         {({ loading, error, data }) => {
           if (loading) return <Loading />;

@@ -6,7 +6,7 @@ import { useQuery } from 'react-apollo-hooks';
 import { SCHEDULES } from './queries';
 import { EMPLOYEES } from '../Employee/queries';
 import { withAuthorization } from '../Session';
-import '../../styles/constantStyle.css';
+import './style.css';
 
 const Schedule = () => {
   const {
@@ -26,7 +26,10 @@ const Schedule = () => {
   if (employeeError) return <ErrorMessage error={employeeError} />;
   if (scheduleError) return <ErrorMessage error={scheduleError} />;
   return (
+    <>
+    <div id='backgroundSchedule'></div>
     <Table schedules={schedules.schedules} employees={employees.employees} />
+    </>
   );
 };
 

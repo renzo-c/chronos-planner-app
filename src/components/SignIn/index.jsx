@@ -1,14 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import SignInForm from './signInForm';
-import { SignUpLink } from '../SignUp';
+import MadeBy from './madeBy';
+import './style.css';
 
 const SignInPage = () => (
-  <div>
-    <h1>SignIn</h1>
+  <>
+    <div id="backgroundLogin"> </div>
+    <br />
     <SignInForm />
-    <SignUpLink />
-  </div>
+    <MadeBy />
+  </>
 );
 
 export default SignInPage;
+export { MadeBy };
