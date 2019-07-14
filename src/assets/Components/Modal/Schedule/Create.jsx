@@ -68,7 +68,6 @@ const Create = () => {
   const handleSave = (createSchedule, variables) => {
     createSchedule(variables).then(() => handleClose());
   };
-  console.log("values-Create", values);
   return (
     <>
       <Tooltip title="New Schedule">

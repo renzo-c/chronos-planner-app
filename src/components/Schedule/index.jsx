@@ -1,10 +1,10 @@
 import React from 'react';
-import { useQuery } from 'react-apollo-hooks';
-import { SCHEDULES } from './queries';
-import { EMPLOYEES } from '../Employee/queries';
 import Table from './table';
 import Loading from '../../assets/Components/Loading';
 import ErrorMessage from '../../assets/Components/ErrorMessage';
+import { useQuery } from 'react-apollo-hooks';
+import { SCHEDULES } from './queries';
+import { EMPLOYEES } from '../Employee/queries';
 import '../../styles/constantStyle.css';
 
 const Schedule = () => {

@@ -20,10 +20,12 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Display from '../../assets/Components/Modal/Employee/Display';
 import Update from '../../assets/Components/Modal/Employee/Update';
 import Create from '../../assets/Components/Modal/Employee/Create';
+import Loading from '../../assets/Components/Loading';
 import { Mutation } from 'react-apollo';
 import { EMPLOYEES } from './queries';
+import { SCHEDULES } from '../Schedule/queries';
+import { ATTENDANCES } from '../Attendance/queries';
 import { DELETE_EMPLOYEE } from './mutations';
-import Loading from '../../assets/Components/Loading';
 import './style.css';
 
 const createData = (
@@ -187,7 +189,6 @@ const useToolbarStyles = makeStyles(theme => ({
   },
 }));
 
-
 const EnhancedTableToolbar = props => {
   const classes = useToolbarStyles();
   const { numSelected, selected, resetSelected } = props;
@@ -195,22 +196,48 @@ const EnhancedTableToolbar = props => {
   const handleDelete = (deleteEmployee, selected) => {
     selected.map(user => {
       deleteEmployee({ variables: { user } });
-    })
+    });
     resetSelected();
   };
-  
+
   const update = (cache, { data: { deleteEmployee } }) => {
-    const { employees } = cache.readQuery({ query: EMPLOYEES });
-    cache.writeQuery({
-      query: EMPLOYEES,
-      data: {
-        employees: employees.filter(
+    try {
+      const { employees } = cache.readQuery({ query: EMPLOYEES });
+      const { schedules } = cache.readQuery({ query: SCHEDULES });
+      const { attendances } = cache.readQuery({ query: ATTENDANCES });
+
+      const newSchedules = schedules.map(schedule => {
+        const newEmployees = schedule.employees.filter(
           employee => employee.user !== deleteEmployee.user
-        ),
-      },
-    });
+        );
+        schedule['employees'] = newEmployees;
+        return schedule;
+      });
+
+      const newAttendances = attendances.filter(
+        attendance => attendance.employee.user !== deleteEmployee.user
+      );
+      cache.writeQuery({
+        query: EMPLOYEES,
+        data: {
+          employees: employees.filter(
+            employee => employee.user !== deleteEmployee.user
+          ),
+        },
+      });
+      cache.writeQuery({
+        query: SCHEDULES,
+        data: { schedules: newSchedules },
+      });
+      cache.writeQuery({
+        query: ATTENDANCES,
+        data: { attendances: newAttendances },
+      });
+    } catch (error) {
+      console.log('employeeUpdateDeleteError', error);
+    }
   };
-  
+
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -232,7 +259,12 @@ const EnhancedTableToolbar = props => {
       <div className={classes.actions}>
         {numSelected > 0 ? (
           <Tooltip title="Delete">
-            <Mutation mutation={DELETE_EMPLOYEE} update={update}>
+            <Mutation
+              mutation={DELETE_EMPLOYEE}
+              update={update}
+              // awaitRefetchQueries={true}
+              // refetchQueries={[{ query: EMPLOYEES, SCHEDULES, ATTENDANCES }]}
+            >
               {(deleteEmployee, { data, loading, error }) => {
                 if (loading) {
                   return <Loading />;
