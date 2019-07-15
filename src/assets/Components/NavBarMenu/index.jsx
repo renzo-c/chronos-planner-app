@@ -5,8 +5,8 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../../../constants/routes';
 import SignOutButton from '../../../components/SignOut';
-import style from '../../../styles/NavBarMenu';
 import { AuthUserContext } from '../../../components/Session';
+import style from './style.css';
 
 const NavBarMenu = () => {
   return (
