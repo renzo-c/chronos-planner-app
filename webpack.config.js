@@ -34,14 +34,13 @@ module.exports = {
         use: ['babel-loader', 'eslint-loader'],
       },
       {
-        test: /\.css$/i,
-        include: path.join(__dirname, 'src'),
-        use: ['style-loader', 'typings-for-css-modules-loader', 'css-loader', ],
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', ],
       },
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.css'],
+    extensions: ['*', '.js', '.jsx'],
   },
 
   plugins: [
