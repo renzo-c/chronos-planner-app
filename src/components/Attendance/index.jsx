@@ -5,7 +5,7 @@ import Table from './table';
 import Loading from '../../assets/Components/Loading';
 import ErrorMessage from '../../assets/Components/ErrorMessage';
 import { withAuthorization } from '../Session';
-// import './style.css';
+import './style.css';
 
 const Attendance = () => {
   return (

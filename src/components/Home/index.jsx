@@ -1,6 +1,6 @@
 import React from 'react';
 import { withAuthorization } from '../Session';
-// import './style.css';
+import './style.css';
 
 const Home = () => (
   <>

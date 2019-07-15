@@ -6,7 +6,7 @@ import { useQuery } from 'react-apollo-hooks';
 import { SCHEDULES } from './queries';
 import { EMPLOYEES } from '../Employee/queries';
 import { withAuthorization } from '../Session';
-// import './style.css';
+import './style.css';
 
 const Schedule = () => {
   const {

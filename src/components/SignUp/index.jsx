@@ -1,6 +1,6 @@
 import React from 'react';
 import SignUpForm from './signUpForm';
-// import './style.css';
+import './style.css';
 
 const SignUpPage = () => (
   <>

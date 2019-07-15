@@ -26,7 +26,7 @@ import { EMPLOYEES } from './queries';
 import { SCHEDULES } from '../Schedule/queries';
 import { ATTENDANCES } from '../Attendance/queries';
 import { DELETE_EMPLOYEE } from './mutations';
-// import './style.css';
+import './style.css';
 
 const createData = (
   firstName,

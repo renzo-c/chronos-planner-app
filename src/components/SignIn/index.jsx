@@ -1,7 +1,7 @@
 import React from 'react';
 import SignInForm from './signInForm';
 import MadeBy from './madeBy';
-// import './style.css';
+import './style.css';
 
 const SignInPage = () => (
   <>

@@ -4,7 +4,7 @@ import Table from './table';
 import { Query } from 'react-apollo';
 import Loading from '../../assets/Components/Loading';
 import { withAuthorization } from '../Session';
-// import '../../styles/constantStyle.css';
+import '../../styles/constantStyle.css';
 
 class Employee extends Component {
   render() {
