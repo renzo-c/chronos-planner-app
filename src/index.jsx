@@ -10,7 +10,6 @@ import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks';
 import App from './components/App/App';
 import Firebase, { FirebaseContext } from './components/Firebase';
-import './styles/index.css';
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
