@@ -1,6 +1,9 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 
+require("dotenv").config();
+
+
 const config = {
   apiKey: process.env.YOUR_API_KEY,
   authDomain: process.env.YOUR_AUTH_DOMAIN,
