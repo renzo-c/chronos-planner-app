@@ -1,0 +1,15 @@
+#backgroundAttendance {
+    background: url('../../assets/images/car-wash-background.jpg');
+    background-size: cover; 
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -2;
+    opacity: 0.5;
+    filter: grayscale(100%);
+}

@@ -26,5 +26,5 @@ yarn-error.log*
 
 # package
 /public
-# compiled css
-*.css
+/dist
+

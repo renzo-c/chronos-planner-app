@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+}
+.tabs {
+    color: white;
+    text-decoration: none;
+}
+.spaceBetween {
+    flex: 1;
+}
