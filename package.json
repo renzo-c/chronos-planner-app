@@ -1,6 +1,9 @@
 {
   "name": "chronos-planner-app",
   "version": "1.0.0",
+  "engines": {
+    "node": "12.4.0"
+  },
   "description": "this is the chronos planner app front end",
   "main": "index.js",
   "scripts": {
