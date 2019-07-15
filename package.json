@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./public/bundle.js",
     "development": "webpack-dev-server --config ./webpack.dev.js",
-    "build": "webpack --config ./webpack.dev.js"
+    "build": "webpack --config ./webpack.config.js"
   },
   "author": "Renzo Navarro",
   "license": "MIT",
