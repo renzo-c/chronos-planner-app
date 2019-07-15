@@ -7,11 +7,11 @@ module.exports = {
   devtool: 'source-map',
 
   node: {
-    fs: 'empty'
+    fs: 'empty',
   },
-  
-  entry: "./src/index.jsx",
-  
+
+  entry: './src/index.jsx',
+
   module: {
     rules: [
       {
@@ -30,16 +30,17 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ["babel-loader", "eslint-loader"]
+        use: ['babel-loader', 'eslint-loader'],
       },
       {
         test: /\.css$/i,
+        include: [path.resolve(__dirname, 'not_exist_path')],
         use: ['style-loader', 'css-loader'],
       },
-    ]
+    ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.css']
+    extensions: ['*', '.js', '.jsx', '.css'],
   },
 
   plugins: [
@@ -47,26 +48,26 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-        title: 'Chronos Planner',
-        template: './src/indexTemplate.html'
-    })
+      title: 'Chronos Planner',
+      template: './src/indexTemplate.html',
+    }),
   ],
 
   output: {
-    path: __dirname + "/public",
-    publicPath: "",
-    filename: "bundle.js"
+    path: __dirname + '/public',
+    publicPath: '',
+    filename: 'bundle.js',
   },
 
   devServer: {
     // For index.html. Static files are served from url pointed to by contentBase (e.g: index.html)
-    contentBase: "./public",
-    // For bundle.js. Html page <script> tags are pointing to the in-memory bundle, which is served at url pointed to by publicPath 
-    publicPath: "/",
+    contentBase: './public',
+    // For bundle.js. Html page <script> tags are pointing to the in-memory bundle, which is served at url pointed to by publicPath
+    publicPath: '/',
     watchContentBase: true,
     compress: true,
     port: 3000,
     hot: true,
-    historyApiFallback: true
-  }
+    historyApiFallback: true,
+  },
 };
