@@ -4,7 +4,7 @@ import './style.css';
 
 const SignUpPage = () => (
   <>
-    <div className="container">
+    <div className="containerSelector">
       <SignUpForm />
     </div>
   </>
