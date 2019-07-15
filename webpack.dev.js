@@ -1,74 +1,74 @@
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-// const Dotenv = require('dotenv-webpack');
-// const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
 
-// module.exports = {
-//   mode: 'development',
+module.exports = {
+  mode: 'development',
 
-//   devtool: 'eval-source-map',
+  devtool: 'eval-source-map',
 
-//   node: {
-//     fs: 'empty'
-//   },
+  node: {
+    fs: 'empty'
+  },
   
-//   entry: "./src/index.jsx",
+  entry: "./src/index.jsx",
   
-//   module: {
-//     rules: [
-//       {
-//         test: /\.(gif|png|jpe?g|svg)$/i,
-//         use: [
-//           'file-loader',
-//           {
-//             loader: 'image-webpack-loader',
-//             options: {
-//               bypassOnDebug: true,
-//               disable: true,
-//             },
-//           },
-//         ],
-//       },
-//       {
-//         test: /\.(js|jsx)$/,
-//         exclude: /node_modules/,
-//         use: ["babel-loader", "eslint-loader"]
-//       },
-//       {
-//         test: /\.css$/i,
-//         use: ['style-loader', 'css-loader'],
-//       },
-//     ]
-//   },
-//   resolve: {
-//     extensions: ['*', '.js', '.jsx']
-//   },
+  module: {
+    rules: [
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        use: [
+          'file-loader',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              bypassOnDebug: true,
+              disable: true,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader", "eslint-loader"]
+      },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+    ]
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx']
+  },
 
-//   plugins: [
-//     new Dotenv(),
-//     new webpack.HotModuleReplacementPlugin(),
-//     new CleanWebpackPlugin(),
-//     new HtmlWebpackPlugin({
-//         title: 'Chronos Planner',
-//         template: './src/indexTemplate.html'
-//     })
-//   ],
+  plugins: [
+    new Dotenv(),
+    new webpack.HotModuleReplacementPlugin(),
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+        title: 'Chronos Planner',
+        template: './src/index.html'
+    })
+  ],
 
-//   output: {
-//     path: __dirname + "/public",
-//     publicPath: "",
-//     filename: "bundle.js"
-//   },
+  output: {
+    path: __dirname + "/public",
+    publicPath: "",
+    filename: "bundle.js"
+  },
 
-//   devServer: {
-//     // For index.html. Static files are served from url pointed to by contentBase (e.g: index.html)
-//     contentBase: "./public",
-//     // For bundle.js. Html page <script> tags are pointing to the in-memory bundle, which is served at url pointed to by publicPath 
-//     publicPath: "/",
-//     watchContentBase: true,
-//     compress: true,
-//     port: 3000,
-//     hot: true,
-//     historyApiFallback: true
-//   }
-// };
+  devServer: {
+    // For index.html. Static files are served from url pointed to by contentBase (e.g: index.html)
+    contentBase: "./public",
+    // For bundle.js. Html page <script> tags are pointing to the in-memory bundle, which is served at url pointed to by publicPath 
+    publicPath: "/",
+    watchContentBase: true,
+    compress: true,
+    port: 3000,
+    hot: true,
+    historyApiFallback: true
+  }
+};
