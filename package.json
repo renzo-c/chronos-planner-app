@@ -7,9 +7,9 @@
   "description": "this is the chronos planner app front end",
   "main": "index.js",
   "scripts": {
+    "start": "node ./public/bundle.js",
     "dev": "webpack-dev-server --config ./webpack.dev.js",
-    "build": "webpack --config ./webpack.config.js",
-    "start": "node ./public/bundle.js"
+    "build": "webpack --config ./webpack.config.js --mode production"
   },
   "author": "Renzo Navarro",
   "license": "MIT",

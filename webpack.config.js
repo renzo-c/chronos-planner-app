@@ -1,12 +1,8 @@
-const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
 const webpack = require('webpack');
 
 module.exports = {
-  devtool: 'source-map',
-
   node: {
     fs: 'empty',
   },
@@ -35,7 +31,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader', ],
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
@@ -44,7 +40,6 @@ module.exports = {
   },
 
   plugins: [
-    new Dotenv(),
     new webpack.HotModuleReplacementPlugin(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
@@ -55,7 +50,7 @@ module.exports = {
 
   output: {
     path: __dirname + '/public',
-    publicPath: '',
+    publicPath: '/',
     filename: 'bundle.js',
   },
 
