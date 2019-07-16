@@ -1,5 +1,5 @@
 import 'date-fns';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { DateTimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 const DateTimePickerModal = ({ value, onChange, label }) => {
   const classes = useStyles();
   return (
-    <div>
+    <Fragment>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DateTimePicker
           label={label}
@@ -26,7 +26,7 @@ const DateTimePickerModal = ({ value, onChange, label }) => {
           className={classes.grid}
         />
       </MuiPickersUtilsProvider>
-    </div>
+    </Fragment>
   );
 };
 
