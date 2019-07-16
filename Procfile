@@ -1,1 +1,1 @@
-web: babel-node ./src/index.jsx
+web: node ./dist/bundle.js
