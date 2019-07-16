@@ -1,4 +1,4 @@
-.containerSelector {
+/* .containerSelector {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -8,7 +8,7 @@
     width: auto;
     height: auto;
     z-index: -2;
-}
+} */
 
 .hideElement {
     visibility: hidden;
