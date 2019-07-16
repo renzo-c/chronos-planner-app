@@ -7,9 +7,11 @@
   "description": "this is the chronos planner app front end",
   "main": "index.js",
   "scripts": {
+    "clean": "rm -rf dist/*",
     "start": "node ./dist/bundle.js",
     "dev": "webpack-dev-server --config ./webpack.config.js",
-    "build": "webpack --config ./webpack.config.js --mode production"
+    "prod-webpack": "webpack --config ./webpack.config.js --mode production",
+    "build": "run-s clean prod-webpack"
   },
   "author": "Renzo Navarro",
   "license": "MIT",

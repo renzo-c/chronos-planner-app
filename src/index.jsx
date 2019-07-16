@@ -34,7 +34,7 @@ const client = new ApolloClient({
   link,
 });
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <FirebaseContext.Provider value={new Firebase()}>
     <ApolloProvider client={client}>
       <ApolloHooksProvider client={client}>
