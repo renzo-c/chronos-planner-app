@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 const DateTimePickerModal = ({ value, onChange, label }) => {
   const classes = useStyles();
   return (
-    <>
+    <div>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <DateTimePicker
           label={label}
@@ -26,7 +26,7 @@ const DateTimePickerModal = ({ value, onChange, label }) => {
           className={classes.grid}
         />
       </MuiPickersUtilsProvider>
-    </>
+    </div>
   );
 };
 
