@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
+  devtool: 'source-map',
   node: { fs: 'empty' },
   entry: './src/index.jsx',
   module: {
@@ -14,7 +15,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader'],
+        use: ['css-loader'],
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,

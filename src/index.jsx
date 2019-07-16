@@ -1,6 +1,7 @@
+import 'isomorphic-unfetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import 'cross-fetch/polyfill';
+// import 'cross-fetch/polyfill';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
@@ -30,6 +31,7 @@ const httpLink = new HttpLink({
 const link = ApolloLink.from([errorLink, httpLink]);
 
 const client = new ApolloClient({
+  fetchOptions: { fetch },
   cache,
   link,
 });
