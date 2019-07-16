@@ -1,6 +1,5 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
 
 module.exports = {
   node: { fs: 'empty' },
@@ -40,7 +39,6 @@ module.exports = {
       title: 'Chronos Planner',
       template: './src/index.html',
     }),
-    new webpack.HotModuleReplacementPlugin(),
   ],
 
   output: {
@@ -52,6 +50,5 @@ module.exports = {
   devServer: {
     contentBase: './dist',
     port: 3000,
-    hot: true,
   },
 };
