@@ -28,6 +28,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.graphql?$/,
+        loader: 'webpack-graphql-loader',
+      },
     ],
   },
   resolve: {
