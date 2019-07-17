@@ -12,9 +12,7 @@ app.get("*", (req, res) => {
 });
 
 
-console.log("process.env", process.env);
-console.log("process.env.YOUR_API_KEY", process.env.YOUR_API_KEY);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
 
-console.log(`Server listening on ${PORT}`);
+console.log(`Server listening on port${PORT}`);
