@@ -1,6 +1,9 @@
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+
+var UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+
 
 module.exports = {
   devtool: 'source-map',
@@ -15,7 +18,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['css-loader'],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,
@@ -36,10 +39,12 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   plugins: [
+    new Dotenv(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
+    new UnminifiedWebpackPlugin()
   ],
 
   output: {

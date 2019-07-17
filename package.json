@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "rm -rf dist/*",
     "start": "node ./dist/bundle.js",
-    "dev": "webpack-dev-server --config ./webpack.config.js",
+    "dev": "webpack-dev-server --config ./webpack.dev.js",
     "prod-webpack": "webpack --config ./webpack.config.js --mode production",
     "build": "run-s clean prod-webpack"
   },
@@ -41,6 +41,7 @@
     "react-hot-loader": "^4.11.1",
     "style-loader": "^0.23.1",
     "typings-for-css-modules-loader": "^1.7.0",
+    "unminified-webpack-plugin": "^2.0.0",
     "webpack": "^4.35.0",
     "webpack-cli": "^3.3.5",
     "webpack-dev-server": "^3.7.2"
@@ -59,6 +60,7 @@
     "css-loader": "^3.0.0",
     "date-fns": "^2.0.0-beta.2",
     "dotenv": "^8.0.0",
+    "express": "^4.17.1",
     "firebase": "^6.2.4",
     "graphql": "^14.4.0",
     "graphql-tag": "^2.10.1",
