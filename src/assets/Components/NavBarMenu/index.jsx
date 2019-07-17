@@ -13,7 +13,7 @@ const NavBarMenu = () => {
     <>
       <AuthUserContext.Consumer>
         {authUser => {
-          console.log('authUser', authUser);
+          // console.log('authUser', authUser);
           return authUser ? <NavBarMenuAuth /> : <NavBarMenuNonAuth />;
         }}
       </AuthUserContext.Consumer>
