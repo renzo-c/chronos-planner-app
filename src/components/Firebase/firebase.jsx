@@ -1,7 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 
-// require("dotenv").config();
+require("dotenv").config();
 
 
 const config = {
