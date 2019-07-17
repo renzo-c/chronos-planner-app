@@ -1,7 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 
-// require("dotenv").config();
+require("dotenv").config();
 
 console.log("process.env", process.env)
 console.log("process.env", process.env.YOUR_API_KEY)
