@@ -2,7 +2,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var UnminifiedWebpackPlugin = require('unminified-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
+// const Dotenv = require('dotenv-webpack');
 
 
 module.exports = {
@@ -39,7 +39,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   plugins: [
-    new Dotenv(),
+    // new Dotenv(),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
