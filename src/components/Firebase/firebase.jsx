@@ -3,7 +3,8 @@ import 'firebase/auth';
 
 // require("dotenv").config();
 
-
+console.log("process.env", process.env)
+console.log("process.env", process.env.YOUR_API_KEY)
 const config = {
   apiKey: process.env.YOUR_API_KEY,
   authDomain: process.env.YOUR_AUTH_DOMAIN,
