@@ -25,7 +25,7 @@ const Landing = () => (
           <br />
           <div className="grid-container">
             <div className="grid-item">
-              &#9658; Sign In (user: admin / password: admin123)
+              &#9658; Sign In (user: admin@gmail.com / password: admin123)
             </div>
             <div className="grid-item">
               &#9658; Sign Up (It can be a fake email)
