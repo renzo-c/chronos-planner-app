@@ -22,8 +22,8 @@ function PaperComponent(props) {
 const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
+    marginRight: theme.spacing(1)
+  }
 }));
 
 const Display = ({ attendance }) => {
@@ -92,9 +92,9 @@ const Display = ({ attendance }) => {
           />
           <TextField
             disabled
-            id="longitud"
-            label="Longitud"
-            value={attendance.longitud || 'Does not start yet'}
+            id="longitude"
+            label="Longitude"
+            value={attendance.longitude || 'Does not start yet'}
             className={classes.textField}
             margin="normal"
             variant="outlined"

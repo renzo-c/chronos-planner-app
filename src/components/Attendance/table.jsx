@@ -337,8 +337,8 @@ export default function EnhancedTable({ attendances }) {
                       </TableCell>
                       <TableCell align="center">{row.employee.user}</TableCell>
                       <TableCell align="center">{row.photo}</TableCell>
-                      <TableCell align="center">{row.latitud}</TableCell>
-                      <TableCell align="center">{row.longitud}</TableCell>
+                      <TableCell align="center">{row.latitude}</TableCell>
+                      <TableCell align="center">{row.longitude}</TableCell>
                       <TableCell align="center">
                         {row.start
                           ? new Date(row.start).toString().slice(0, 21)
