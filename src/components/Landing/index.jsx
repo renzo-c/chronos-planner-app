@@ -7,8 +7,13 @@ const Landing = () => (
       <div className="item2">
         <h1>Description:</h1>
         <p>
+<<<<<<< HEAD
           This is a demo yet under construction. It aims to develop the
           following products:
+=======
+          This is demo yet under construction. It aims to develop the following
+          product:
+>>>>>>> origin/master
         </p>
         <p>
           <b>Web Admin page</b> &#9658; To create / manage employees and
