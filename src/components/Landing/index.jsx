@@ -7,8 +7,8 @@ const Landing = () => (
       <div className="item2">
         <h1>Description:</h1>
         <p>
-          This is not a commercial project but a proof of concept yet under
-          construction. It aims to develop the following prototypes:
+          This is demo yet under construction. It aims to develop the following
+          product:
         </p>
         <p>
           <b>Web Admin page</b> &#9658; To create / manage employees and
@@ -38,11 +38,7 @@ const Landing = () => (
         </p>
       </div>
       <div className="item3">
-        <h1>Motivation:</h1>
-        <p>
-          Understand how the following technologies work together under the hood
-          in such a web / mobile application:
-        </p>
+        <h1>Technologies used:</h1>
         <p>
           &#9658; <b>MongoDB</b> as database
         </p>
