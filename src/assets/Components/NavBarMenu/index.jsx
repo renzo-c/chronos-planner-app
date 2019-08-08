@@ -44,11 +44,11 @@ const NavBarMenuAuth = () => (
   <AppBar position="static">
     <Toolbar>
       <Link className='tabs' to={ROUTES.LANDING}>
-        <Button color="inherit">LANDING</Button>
-      </Link>
-      <Link className='tabs' to={ROUTES.HOME}>
         <Button color="inherit">HOME</Button>
       </Link>
+      {/* <Link className='tabs' to={ROUTES.HOME}>
+        <Button color="inherit">HOME</Button>
+      </Link> */}
       <Link className='tabs' to={ROUTES.EMPLOYEE}>
         <Button color="inherit">EMPLOYEE</Button>
       </Link>
