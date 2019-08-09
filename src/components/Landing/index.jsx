@@ -4,7 +4,7 @@ import './style.css';
 const Landing = () => (
   <>
     <div className="container">
-      <div className="item2">
+      <div>
         <h1>Description:</h1>
         <p>
           This is a demo yet under construction. It aims to develop the
